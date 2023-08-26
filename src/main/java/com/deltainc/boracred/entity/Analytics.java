@@ -16,15 +16,15 @@ public class Analytics {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer user_id;
+    private Integer analytics_id;
 
     @ManyToOne
     @JoinColumn(name = "proposal.proposal_id")
-    private Proposal proposal_id;
+    private Proposal proposal;
 
     @ManyToOne
     @JoinColumn(name = "customer.customer_id")
-    private Customer customer_id;
+    private Customer customer;
 
     @Column
     private int num_titulos_protestados;

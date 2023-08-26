@@ -1,16 +1,23 @@
 package com.deltainc.boracred.controller;
 
+import com.deltainc.boracred.configuration.AWSConfig;
 import com.deltainc.boracred.dto.ProposalRegisterDTO;
 import com.deltainc.boracred.dto.ProposalUpdateDTO;
+import com.deltainc.boracred.entity.Analytics;
 import com.deltainc.boracred.entity.Customer;
+import com.deltainc.boracred.entity.Files;
 import com.deltainc.boracred.entity.Proposal;
+import com.deltainc.boracred.repositories.AnalyticsRepository;
 import com.deltainc.boracred.repositories.CustomerRepository;
+import com.deltainc.boracred.repositories.FilesRepository;
 import com.deltainc.boracred.repositories.ProposalRepository;
+import com.deltainc.boracred.services.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -26,6 +33,12 @@ public class ProposalController {
 
     @Autowired
     CustomerRepository customerRepository;
+
+    @Autowired
+    AnalyticsRepository analyticsRepository;
+
+    @Autowired
+    FilesRepository filesRepository;
 
     @PostMapping("/register")
     public ResponseEntity registerProposal(@RequestBody ProposalRegisterDTO registerData){
@@ -105,6 +118,45 @@ public class ProposalController {
             if (!proposal.getObservacao_analista().equals(data.getObservacao_analista())){
                 proposal.setObservacao_analista(data.getObservacao_analista());
             }
+            proposalRepository.save(proposal);
+            Analytics analytics = new Analytics();
+
+            analytics.setProposal(proposal);
+
+            if (analytics.getNum_titulos_protestados() != data.getNum_titulos_protestados()){
+                analytics.setNum_titulos_protestados(data.getNum_titulos_protestados());
+            }
+            if (analytics.getScore() != data.getScore()){
+                analytics.setScore(data.getScore());
+            }
+            if (analytics.getNum_refins() != data.getNum_refins()){
+                analytics.setNum_refins((data.getNum_refins()));
+            }
+            if (analytics.getValor_cadins() != data.getValor_cadins()){
+                analytics.setValor_cadins(data.getValor_cadins());
+            }
+            if (analytics.getValor_iss() != data.getValor_iss()){
+                analytics.setValor_iss(data.getValor_iss());
+            }
+            if (analytics.getNum_processos() != data.getNum_processos()){
+                analytics.setNum_processos(data.getNum_processos());
+            }
+            if (analytics.getValor_processos() != data.getValor_processos()){
+                analytics.setValor_processos(data.getValor_processos());
+            }
+            if (analytics.getNum_uf_processos() != data.getNum_uf_processos()){
+                analytics.setNum_uf_processos(data.getNum_uf_processos());
+            }
+            if (analytics.getDivida_ativa() != data.getDivida_ativa()){
+                analytics.setDivida_ativa(data.getDivida_ativa());
+            }
+            if (analytics.getValor_titulos_protestados() != data.getValor_titulos_protestados()){
+                analytics.setValor_titulos_protestados(data.getValor_titulos_protestados());
+            }
+            if (analytics.getRisco() != data.getRisco()){
+                analytics.setRisco(data.getRisco());
+            }
+            analyticsRepository.save(analytics);
         }
         return new ResponseEntity<>("Updated", HttpStatus.OK);
     }
