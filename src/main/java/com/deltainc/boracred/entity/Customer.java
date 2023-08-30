@@ -56,4 +56,11 @@ public class Customer {
 
     @Column
     private LocalDate data_nascimento;
+
+    @Column
+    private String business;
+
+    @ManyToOne
+    @JoinColumn(name = "users.user_id")
+    private Users created_by;
 }

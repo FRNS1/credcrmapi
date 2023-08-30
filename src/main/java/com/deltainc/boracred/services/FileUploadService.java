@@ -20,7 +20,7 @@ public class FileUploadService {
     public static String uploadFile(MultipartFile file){
         AmazonS3 s3Client = AWSConfig.amazonS3();
         File fileObj = convertMultiPartFiletoFile(file);
-        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        String fileName = "documentos/" + System.currentTimeMillis() + "_" + file.getOriginalFilename();
         s3Client.putObject(new PutObjectRequest("docsbora", fileName, fileObj));
         fileObj.delete();
         return fileName;

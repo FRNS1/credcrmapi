@@ -4,7 +4,9 @@ import com.deltainc.boracred.dto.LoginDTO;
 import com.deltainc.boracred.dto.RegisterDTO;
 import com.deltainc.boracred.dto.TokenDTO;
 import com.deltainc.boracred.entity.Contacts;
+import com.deltainc.boracred.entity.Grupos;
 import com.deltainc.boracred.entity.Users;
+import com.deltainc.boracred.repositories.GruposRepository;
 import com.deltainc.boracred.repositories.UsersRepository;
 import com.deltainc.boracred.security.CustomUserDetailsService;
 import com.deltainc.boracred.security.JwtService;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.deltainc.boracred.security.SecurityConfig.passwordEncoder;
 
@@ -34,6 +37,9 @@ public class UsersController {
     @Autowired
     private JwtService jwtService;
 
+    @Autowired
+    private GruposRepository gruposRepository;
+
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterDTO registerData){
@@ -45,6 +51,9 @@ public class UsersController {
             user.setEmpresa(registerData.getEmpresa());
             user.setSetor(registerData.getSetor());
             user.setEmail(registerData.getEmail());
+            Optional<Grupos> OptionalGrupo = gruposRepository.findById(registerData.getGrupos_grupo_id());
+            Grupos grupo = OptionalGrupo.get();
+            user.setGrupo_id(grupo);
             usersRepository.save(user);
             return new ResponseEntity<>("Created", HttpStatus.CREATED);
         }catch (Exception error){
@@ -64,11 +73,15 @@ public class UsersController {
             Users user = usersRepository.findByUsername(loginData.getUsername());
             String nomeUser = user.getNome();
             String email = user.getEmail();
+            Integer userId = user.getUser_id();
+            Grupos userGroup = user.getGrupo_id();
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
             response.put("nome", nomeUser);
             response.put("logged", true);
             response.put("email", email);
+            response.put("userid", userId);
+            response.put("usergroup", userGroup.getNome_grupo());
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception error) {
             Map<String, Object> response = new HashMap<>();

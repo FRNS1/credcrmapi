@@ -20,7 +20,7 @@ public class Contacts {
 
     @ManyToOne
     @JoinColumn(name = "customer.customer_id")
-    private Customer customer_id;
+    private Customer customer;
 
     @Column
     private String telefone;

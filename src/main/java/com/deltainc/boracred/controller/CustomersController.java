@@ -2,21 +2,22 @@ package com.deltainc.boracred.controller;
 
 import com.deltainc.boracred.dto.CustomerRegisterDTO;
 import com.deltainc.boracred.dto.CustomerUpdateDTO;
+import com.deltainc.boracred.dto.GetDataDTO;
 import com.deltainc.boracred.entity.Address;
 import com.deltainc.boracred.entity.Contacts;
 import com.deltainc.boracred.entity.Customer;
+import com.deltainc.boracred.entity.Users;
 import com.deltainc.boracred.repositories.AddressRepository;
 import com.deltainc.boracred.repositories.ContactsRepository;
 import com.deltainc.boracred.repositories.CustomerRepository;
+import com.deltainc.boracred.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("api/v1/customers")
@@ -31,12 +32,17 @@ public class CustomersController {
     @Autowired
     AddressRepository addressRepository;
 
+    @Autowired
+    UsersRepository usersRepository;
+
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody CustomerRegisterDTO csDataReg){
         try{
             Customer newCustomer = new Customer();
             Address newAddress = new Address();
             Contacts newContact = new Contacts();
+            Optional<Users> OptionalUser = usersRepository.findById(csDataReg.getCreated_by());
+            Users createdBy = OptionalUser.get();
             System.out.println(csDataReg);
             if ("true".equals(csDataReg.getIs_cnpj())) {
                 newCustomer.set_cnpj(true);
@@ -45,8 +51,10 @@ public class CustomersController {
                 newCustomer.setCnpj(csDataReg.getCnpj());
                 newCustomer.setData_abertura(csDataReg.getData_abertura());
                 newCustomer.setSegmento(csDataReg.getSegmento());
+                newCustomer.setCreated_by(createdBy);
+                newCustomer.setBusiness(csDataReg.getBusiness().replace(" MASTER", ""));
                 customerRepository.save(newCustomer);
-                newContact.setCustomer_id(newCustomer);
+                newContact.setCustomer(newCustomer);
                 newContact.setEmail(csDataReg.getEmail());
                 newContact.setTelefone(csDataReg.getTelefone());
                 contactsRepository.save(newContact);
@@ -67,8 +75,10 @@ public class CustomersController {
                 newCustomer.setEscolaridade(csDataReg.getEscolaridade());
                 newCustomer.setGenero(csDataReg.getGenero());
                 newCustomer.setOcupacao(csDataReg.getOcupacao());
+                newCustomer.setCreated_by(createdBy);
+                newCustomer.setBusiness(csDataReg.getBusiness().replace(" MASTER", ""));
                 customerRepository.save(newCustomer);
-                newContact.setCustomer_id(newCustomer);
+                newContact.setCustomer(newCustomer);
                 newContact.setEmail(csDataReg.getEmail());
                 newContact.setTelefone(csDataReg.getTelefone());
                 contactsRepository.save(newContact);
@@ -89,9 +99,67 @@ public class CustomersController {
         }
     }
 
-    @GetMapping("/getall")
-    public ResponseEntity getAll(){
-        return new ResponseEntity(customerRepository.findAll(), HttpStatus.OK);
+    @PostMapping("/getall")
+    public ResponseEntity getAll(@RequestBody GetDataDTO data) {
+        String magicWord = "MASTER";
+        List<HashMap<String, Object>> listResponse = new ArrayList<>();
+        if ("MASTER".equals(data.getGrupo()) || "RISK".equals(data.getGrupo())) {
+            List<Customer> allCustomers = customerRepository.findAll();
+            for (Customer customer : allCustomers) {
+                HashMap<String, Object> response = new HashMap<>();
+                Contacts contact = contactsRepository.findByCustomer(customer);
+                System.out.println(contact);
+                response.put("customerId", customer.getCustomer_id());
+                response.put("nome", customer.getNome_completo());
+                response.put("nomeFantasia", customer.getNome_fantasia());
+                response.put("razaoSocial", customer.getRazao_social());
+                response.put("cnpj", customer.getCnpj());
+                response.put("cpf", customer.getCpf());
+                response.put("email", contact.getEmail());
+                response.put("telefone", contact.getTelefone());
+                listResponse.add(response);
+            }
+            return new ResponseEntity(listResponse, HttpStatus.OK);
+        } else if (data.getGrupo().contains(magicWord)) {
+            Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
+            Users user = optionalUser.get();
+            String grupoPesquisa = data.getGrupo().replace(" MASTER", "");
+            List<Customer> allCustomers = customerRepository.findByBusiness(grupoPesquisa);
+            for (Customer customer : allCustomers) {
+                HashMap<String, Object> response = new HashMap<>();
+                Contacts contact = contactsRepository.findByCustomer(customer);
+                System.out.println(contact);
+                response.put("customerId", customer.getCustomer_id());
+                response.put("nome", customer.getNome_completo());
+                response.put("nomeFantasia", customer.getNome_fantasia());
+                response.put("razaoSocial", customer.getRazao_social());
+                response.put("cnpj", customer.getCnpj());
+                response.put("cpf", customer.getCpf());
+                response.put("email", contact.getEmail());
+                response.put("telefone", contact.getTelefone());
+                listResponse.add(response);
+            }
+            return new ResponseEntity(listResponse, HttpStatus.OK);
+        } else {
+            Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
+            Users user = optionalUser.get();
+            List<Customer> allCustomers = customerRepository.findByBusinessAndCreatedBy(data.getGrupo(), user);
+            for (Customer customer : allCustomers) {
+                HashMap<String, Object> response = new HashMap<>();
+                Contacts contact = contactsRepository.findByCustomer(customer);
+                System.out.println(contact);
+                response.put("customerId", customer.getCustomer_id());
+                response.put("nome", customer.getNome_completo());
+                response.put("nomeFantasia", customer.getNome_fantasia());
+                response.put("razaoSocial", customer.getRazao_social());
+                response.put("cnpj", customer.getCnpj());
+                response.put("cpf", customer.getCpf());
+                response.put("email", contact.getEmail());
+                response.put("telefone", contact.getTelefone());
+                listResponse.add(response);
+            }
+            return new ResponseEntity(listResponse, HttpStatus.OK);
+        }
     }
 
     @GetMapping("/getbyid/{id}")

@@ -51,4 +51,8 @@ public class CustomerRegisterDTO {
 
     private String pais;
 
+    private Integer created_by;
+
+    private String business;
+
 }

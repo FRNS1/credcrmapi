@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
-@EntityScan("com.deltainc.boracred.entity")
 @EnableJpaRepositories("com.deltainc.boracred.repositories")
 public class BoracredApplication extends SpringBootServletInitializer {
 
