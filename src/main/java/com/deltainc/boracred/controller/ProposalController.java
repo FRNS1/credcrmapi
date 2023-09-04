@@ -3,14 +3,8 @@ package com.deltainc.boracred.controller;
 import com.deltainc.boracred.configuration.AWSConfig;
 import com.deltainc.boracred.dto.ProposalRegisterDTO;
 import com.deltainc.boracred.dto.ProposalUpdateDTO;
-import com.deltainc.boracred.entity.Analytics;
-import com.deltainc.boracred.entity.Customer;
-import com.deltainc.boracred.entity.Files;
-import com.deltainc.boracred.entity.Proposal;
-import com.deltainc.boracred.repositories.AnalyticsRepository;
-import com.deltainc.boracred.repositories.CustomerRepository;
-import com.deltainc.boracred.repositories.FilesRepository;
-import com.deltainc.boracred.repositories.ProposalRepository;
+import com.deltainc.boracred.entity.*;
+import com.deltainc.boracred.repositories.*;
 import com.deltainc.boracred.services.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/api/v1/proposal")
@@ -38,26 +30,60 @@ public class ProposalController {
     AnalyticsRepository analyticsRepository;
 
     @Autowired
+    UsersRepository usersRepository;
+
+    @Autowired
     FilesRepository filesRepository;
 
     @PostMapping("/register")
     public ResponseEntity registerProposal(@RequestBody ProposalRegisterDTO registerData){
         try {
             Proposal proposal = new Proposal();
+            Optional<Users> optionalUser = usersRepository.findById(registerData.getUser_id());
+            Users user = optionalUser.get();
             Optional<Customer> optionalCustomer = customerRepository.findById(registerData.getCustomer_id());
             Customer customer = optionalCustomer.get();
-            proposal.setCustomer_id(customer);
+            proposal.setCustomer(customer);
             proposal.setValor_desejado(registerData.getValor_desejado());
             proposal.setPrazo(registerData.getPrazo());
             proposal.setStatus("Em análise");
             proposal.setObservacao_cliente(registerData.getObservacao_cliente());
             proposal.setData_abertura(LocalDate.now());
+            proposal.setUser(user);
             proposalRepository.save(proposal);
             return new ResponseEntity<>("Created", HttpStatus.CREATED);
         }catch(Exception error){
             Map<String, Object> response = new HashMap<>();
             response.put("erro", error.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getbyuser/{id}")
+    public ResponseEntity getByUser(@PathVariable Integer id){
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+        if (optionalCustomer != null) {
+            List<HashMap<String, Object>> listResponse = new ArrayList<>();
+            Customer customer = optionalCustomer.get();
+            List<Proposal> proposals = proposalRepository.findByCustomer(customer);
+            for (Proposal proposal : proposals) {
+                HashMap<String, Object> response = new HashMap<>();
+                Users user = proposal.getUser();
+                System.out.println(user);
+                response.put("tipo", customer.is_cnpj());
+                response.put("username", user.getUsername());
+                response.put("business", customer.getBusiness());
+                response.put("date", proposal.getData_abertura());
+                response.put("razaoSocial", customer.getRazao_social());
+                response.put("nomeCompleto", customer.getNome_completo());
+                response.put("cpf", customer.getCpf());
+                response.put("cnpj", customer.getCnpj());
+                response.put("status", proposal.getStatus());
+                listResponse.add(response);
+            }
+            return new ResponseEntity<>(listResponse, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("User not found", HttpStatus.OK);
         }
     }
 

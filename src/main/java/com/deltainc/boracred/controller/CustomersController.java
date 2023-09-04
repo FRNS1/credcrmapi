@@ -58,7 +58,7 @@ public class CustomersController {
                 newContact.setEmail(csDataReg.getEmail());
                 newContact.setTelefone(csDataReg.getTelefone());
                 contactsRepository.save(newContact);
-                newAddress.setCustomer_id(newCustomer);
+                newAddress.setCustomer(newCustomer);
                 newAddress.setCep(csDataReg.getCep());
                 newAddress.setLogradouro(csDataReg.getLogradouro());
                 newAddress.setBairro(csDataReg.getBairro());
@@ -82,7 +82,7 @@ public class CustomersController {
                 newContact.setEmail(csDataReg.getEmail());
                 newContact.setTelefone(csDataReg.getTelefone());
                 contactsRepository.save(newContact);
-                newAddress.setCustomer_id(newCustomer);
+                newAddress.setCustomer(newCustomer);
                 newAddress.setCep(csDataReg.getCep());
                 newAddress.setLogradouro(csDataReg.getLogradouro());
                 newAddress.setBairro(csDataReg.getBairro());
@@ -164,9 +164,32 @@ public class CustomersController {
 
     @GetMapping("/getbyid/{id}")
     public ResponseEntity getCustomerById(@PathVariable Integer id){
-        Optional<Customer> customer = customerRepository.findById(id);
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+        Customer customer = optionalCustomer.get();
         if (customer != null) {
-            return new ResponseEntity<>(customer, HttpStatus.OK);
+            Address address = addressRepository.findByCustomer(customer);
+            Contacts contact = contactsRepository.findByCustomer(customer);
+            HashMap<String, Object> response = new HashMap<>();
+            response.put("tipoCliente", customer.is_cnpj());
+            response.put("nomeCompleto", customer.getNome_completo());
+            response.put("cpf", customer.getCpf());
+            response.put("dataNascimento", customer.getData_nascimento());
+            response.put("genero", customer.getGenero());
+            response.put("escolaridade", customer.getEscolaridade());
+            response.put("ocupacao", customer.getOcupacao());
+            response.put("cnpj", customer.getCnpj());
+            response.put("nomeFantasia", customer.getNome_fantasia());
+            response.put("razaoSocial", customer.getRazao_social());
+            response.put("segmento", customer.getSegmento());
+            response.put("dataAbertura", customer.getData_abertura());
+            response.put("cep", address.getCep());
+            response.put("logradouro", address.getLogradouro());
+            response.put("bairro", address.getBairro());
+            response.put("cidade", address.getCidade());
+            response.put("pais", address.getPais());
+            response.put("telefone", contact.getTelefone());
+            response.put("email", contact.getEmail());
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
         }

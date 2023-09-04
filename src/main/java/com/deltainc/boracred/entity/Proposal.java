@@ -20,7 +20,11 @@ public class Proposal {
 
     @ManyToOne
     @JoinColumn(name = "customer.customer_id")
-    private Customer customer_id;
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "users.user_id")
+    private Users user;
 
     @Column
     private float valor_desejado;

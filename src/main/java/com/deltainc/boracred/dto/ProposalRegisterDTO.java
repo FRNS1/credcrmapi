@@ -13,6 +13,8 @@ public class ProposalRegisterDTO {
 
     private Integer customer_id;
 
+    private Integer user_id;
+
     private float valor_desejado;
 
     private int prazo;
