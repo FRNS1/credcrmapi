@@ -43,7 +43,7 @@ public class FilesController {
         Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal());
         Proposal proposal = optionalProposal.get();
         Files newFile = new Files();
-        newFile.setProposal_id(proposal);
+        newFile.setProposal(proposal);
         newFile.setTipo_arquivo(data.getTipoArquivo());
         newFile.setFile_name(data.getFilaName());
         newFile.setUrl_arquivo("https://docsbora.s3.amazonaws.com/" + fileName);

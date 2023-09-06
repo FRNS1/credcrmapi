@@ -21,7 +21,7 @@ public class Files {
 
     @ManyToOne
     @JoinColumn(name="proposal.proposal_id")
-    private Proposal proposal_id;
+    private Proposal proposal;
 
     @Column
     private String tipo_arquivo;

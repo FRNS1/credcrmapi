@@ -1,6 +1,7 @@
 package com.deltainc.boracred.controller;
 
 import com.deltainc.boracred.configuration.AWSConfig;
+import com.deltainc.boracred.dto.GetDataDTO;
 import com.deltainc.boracred.dto.ProposalRegisterDTO;
 import com.deltainc.boracred.dto.ProposalUpdateDTO;
 import com.deltainc.boracred.entity.*;
@@ -31,6 +32,12 @@ public class ProposalController {
 
     @Autowired
     UsersRepository usersRepository;
+
+    @Autowired
+    SCRRepository scrRepository;
+
+    @Autowired
+    AllsDataRepository allsDataRepository;
 
     @Autowired
     FilesRepository filesRepository;
@@ -87,14 +94,231 @@ public class ProposalController {
         }
     }
 
+    @PostMapping("/getcustomers")
+    public ResponseEntity getCustomers(@RequestBody GetDataDTO data) {
+        String magicWord = "MASTER";
+        List<HashMap<String, Object>> listResponse = new ArrayList<>();
+        if ("MASTER".equals(data.getGrupo()) || "RISK".equals(data.getGrupo())) {
+            List<Customer> allCustomers = customerRepository.findAll();
+            for (Customer customer : allCustomers){
+                List<Proposal> listProposal = proposalRepository.findByCustomer(customer);
+                for (Proposal proposal : listProposal) {
+                    HashMap<String, Object> response = new HashMap<>();
+                    response.put("indicador", customer.getCreated_by());
+                    response.put("business", customer.getBusiness());
+                    response.put("dataCriacao", proposal.getData_abertura());
+                    response.put("razaoSocial", customer.getRazao_social());
+                    response.put("nomeCompleto", customer.getNome_completo());
+                    response.put("cpf", customer.getCpf());
+                    response.put("cnpj", customer.getCnpj());
+                    response.put("status", proposal.getStatus());
+                    response.put("proposalId", proposal.getProposal_id());
+                    listResponse.add(response);
+                }
+            }
+            return new ResponseEntity<>(listResponse, HttpStatus.OK);
+        } else if (data.getGrupo().contains(magicWord)){
+            Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
+            Users user = optionalUser.get();
+            String grupoPesquisa = data.getGrupo().replace(" MASTER", "");
+            List<Customer> allCustomers = customerRepository.findByBusinessAndCreatedBy(grupoPesquisa, user);
+            for (Customer customer : allCustomers){
+                HashMap<String, Object> response = new HashMap<>();
+                List<Proposal> proposals = proposalRepository.findByCustomer(customer);
+                for (Proposal proposal : proposals) {
+                    HashMap<String, Object> response2 = new HashMap<>();
+                    response2.put("indicador", customer.getCreated_by());
+                    response2.put("business", customer.getBusiness());
+                    response2.put("dataCriacao", proposal.getData_abertura());
+                    response2.put("razaoSocial", customer.getRazao_social());
+                    response2.put("nomeCompleto", customer.getNome_completo());
+                    response2.put("cpf", customer.getCpf());
+                    response2.put("cnpj", customer.getCnpj());
+                    response2.put("status", proposal.getStatus());
+                    response2.put("proposalId", proposal.getProposal_id());
+                    listResponse.add(response);
+                }
+            }
+        }
+        return new ResponseEntity<>(listResponse, HttpStatus.OK);
+    }
+
     @GetMapping("/getall")
     public ResponseEntity getall(){
         return new ResponseEntity<>(proposalRepository.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/getbyid")
+    @GetMapping("/getbyid/{id}")
     public ResponseEntity getbyid(@PathVariable Integer id){
-        return new ResponseEntity<>(proposalRepository.findById(id), HttpStatus.OK);
+        Optional<Proposal> optionalProposal = proposalRepository.findById(id);
+        Proposal proposal = optionalProposal.get();
+        Customer customer = proposal.getCustomer();
+        Analytics analytics = analyticsRepository.findByProposal(proposal);
+        SCR scr = scrRepository.findByProposal(proposal);
+        AllsData allsData = allsDataRepository.findByProposal(proposal);
+        List<Files> files = filesRepository.findByProposal(proposal);
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("proposalId", proposal.getProposal_id());
+        response.put("customerName", customer.getNome_completo());
+        response.put("customerRazaoSocial", customer.getRazao_social());
+        response.put("cnpj", customer.getCnpj());
+        response.put("cpf", customer.getCpf());
+        response.put("valorDesejado", proposal.getValor_desejado());
+        response.put("taxa", proposal.getTaxa());
+        response.put("corban", proposal.getCorban());
+        response.put("status", proposal.getStatus());
+        response.put("montante", proposal.getProposal_id());
+        response.put("valorLiberado", proposal.getValor_liberado());
+        response.put("prazo", proposal.getPrazo());
+        response.put("dataAbertura", proposal.getData_abertura());
+        response.put("dataPrimeiraParcela", proposal.getData_primeira_parcela());
+        response.put("totalJuros", proposal.getTotal_juros());
+        response.put("statusContrato", proposal.getStatus_contrato());
+        response.put("motivoReprovacao", proposal.getMotivo_reprovacao());
+        response.put("observacaoCliente", proposal.getObservacao_cliente());
+        response.put("observacaoAnalista", proposal.getObservacao_analista());
+        if (analytics != null) {
+            HashMap<String, Object> responseAnalytics = new HashMap<>();
+            responseAnalytics.put("num_titulos_protestados", analytics.getNum_titulos_protestados());
+            responseAnalytics.put("score", analytics.getScore());
+            responseAnalytics.put("num_refins", analytics.getNum_refins());
+            responseAnalytics.put("valor_cadins", analytics.getValor_cadins());
+            responseAnalytics.put("valor_iss", analytics.getValor_iss());
+            responseAnalytics.put("num_processos", analytics.getNum_processos());
+            responseAnalytics.put("valor_processos", analytics.getValor_processos());
+            responseAnalytics.put("num_uf_processos", analytics.getNum_uf_processos());
+            responseAnalytics.put("divida_ativa", analytics.getDivida_ativa());
+            responseAnalytics.put("valor_titulos_protestados", analytics.getValor_titulos_protestados());
+            responseAnalytics.put("risco", analytics.getRisco());
+            responseAnalytics.put("pep", analytics.isPep());
+            responseAnalytics.put("num_cheques_devolvidos", analytics.getNum_cheques_devolvidos());
+            responseAnalytics.put("valor_cheques_devolvidos", analytics.getValor_cheques_devolvidos());
+            responseAnalytics.put("valor_pefins", analytics.getValor_pefins());
+            responseAnalytics.put("num_pefins", analytics.getNum_pefins());
+            responseAnalytics.put("empresas_nao_informadas", analytics.getEmpresas_nao_informadas());
+            response.put("analytics", responseAnalytics);
+        } else {
+            HashMap<String, Object> responseAnalytics = new HashMap<>();
+            responseAnalytics.put("num_titulos_protestados", "Sem dados");
+            responseAnalytics.put("score", "Sem dados");
+            responseAnalytics.put("num_refins", "Sem dados");
+            responseAnalytics.put("valor_cadins", "Sem dados");
+            responseAnalytics.put("valor_iss", "Sem dados");
+            responseAnalytics.put("num_processos", "Sem dados");
+            responseAnalytics.put("valor_processos", "Sem dados");
+            responseAnalytics.put("num_uf_processos", "Sem dados");
+            responseAnalytics.put("divida_ativa", "Sem dados");
+            responseAnalytics.put("valor_titulos_protestados", "Sem dados");
+            responseAnalytics.put("risco", "Sem dados");
+            responseAnalytics.put("pep", "Sem dados");
+            responseAnalytics.put("num_chuques_devolvidos", "Sem dados");
+            responseAnalytics.put("valor_cheques_devolvidos", "Sem dados");
+            responseAnalytics.put("valor_pefins", "Sem dados");
+            responseAnalytics.put("num_pefins", "Sem dados");
+            responseAnalytics.put("empresas_nao_informadas", "Sem dados");
+            response.put("analytics", "Sem dados");
+        }
+        if (scr != null) {
+            HashMap<String, Object> responseScr = new HashMap<>();
+            responseScr.put("vencer_valor_total", scr.getVencer_valor_total());
+            responseScr.put("vencer_ate_30_dias_vencidos_ate_14_dias", scr.getVencer_ate_30_dias_vencidos_ate_14_dias());
+            responseScr.put("vencer_31_60_dias", scr.getVencer_31_60_dias());
+            responseScr.put("vencer_61_90_dias", scr.getVencer_61_90_dias());
+            responseScr.put("vencer_181_360_dias", scr.getVencer_181_360_dias());
+            responseScr.put("vencer_acima_360_dias", scr.getVencer_acima_360_dias());
+            responseScr.put("vencer_indeterminado", scr.getVencer_indeterminado());
+            responseScr.put("vencido_total", scr.getVencido_total());
+            responseScr.put("vencido_15_30_dias", scr.getVencido_15_30_dias());
+            responseScr.put("vencido_31_60_dias", scr.getVencido_31_60_dias());
+            responseScr.put("vencido_61_90_dias", scr.getVencido_61_90_dias());
+            responseScr.put("vencido_91_180_dias", scr.getVencido_91_180_dias());
+            responseScr.put("vencido_181_360_dias", scr.getVencido_181_360_dias());
+            responseScr.put("vencido_acima_360_dias", scr.getVencido_acima_360_dias());
+            responseScr.put("prejuizo_total", scr.getPrejuizo_total());
+            responseScr.put("prejuizo_ate_12_meses", scr.getPrejuizo_ate_12_meses());
+            responseScr.put("prejuizo_acima_12_meses", scr.getPrejuizo_acima_12_meses());
+            responseScr.put("coobrigacao_total", scr.getCoobrigacao_total());
+            responseScr.put("coobrigacao_assumida", scr.getCoobrigacao_assumida());
+            responseScr.put("coobrigacao_prestadas", scr.getCoobrigacao_prestadas());
+            responseScr.put("creditos_liberar_total", scr.getCreditos_liberar_total());
+            responseScr.put("creditos_liberar_ate_360_dias", scr.getCreditos_liberar_ate_360_dias());
+            responseScr.put("creditos_liberar_acima_360_dias", scr.getCreditos_liberar_acima_360_dias());
+            responseScr.put("limites_credito_valor_total", scr.getLimites_credito_valor_total());
+            responseScr.put("limites_credito_vencimento_ate_360_dias", scr.getLimites_credito_vencimento_ate_360_dias());
+            responseScr.put("limites_credito_vencimento_acima_360_dias", scr.getLimites_credito_vencimento_acima_360_dias());
+            response.put("scr", responseScr);
+        } else {
+            HashMap<String, Object> responseScr = new HashMap<>();
+            responseScr.put("vencer_valor_total", "Sem dados");
+            responseScr.put("vencer_ate_30_dias_vencidos_ate_14_dias", "Sem dados");
+            responseScr.put("vencer_31_60_dias", "Sem dados");
+            responseScr.put("vencer_61_90_dias", "Sem dados");
+            responseScr.put("vencer_181_360_dias", "Sem dados");
+            responseScr.put("vencer_acima_360_dias", "Sem dados");
+            responseScr.put("vencer_indeterminado", "Sem dados");
+            responseScr.put("vencido_total", "Sem dados");
+            responseScr.put("vencido_15_30_dias", "Sem dados");
+            responseScr.put("vencido_31_60_dias", "Sem dados");
+            responseScr.put("vencido_61_90_dias", "Sem dados");
+            responseScr.put("vencido_91_180_dias", "Sem dados");
+            responseScr.put("vencido_181_360_dias", "Sem dados");
+            responseScr.put("vencido_acima_360_dias", "Sem dados");
+            responseScr.put("prejuizo_total", "Sem dados");
+            responseScr.put("prejuizo_ate_12_meses", "Sem dados");
+            responseScr.put("prejuizo_acima_12_meses", "Sem dados");
+            responseScr.put("coobrigacao_total", "Sem dados");
+            responseScr.put("coobrigacao_assumida", "Sem dados");
+            responseScr.put("coobrigacao_prestadas", "Sem dados");
+            responseScr.put("creditos_liberar_total", "Sem dados");
+            responseScr.put("creditos_liberar_ate_360_dias", "Sem dados");
+            responseScr.put("creditos_liberar_acima_360_dias", "Sem dados");
+            responseScr.put("limites_credito_valor_total", "Sem dados");
+            responseScr.put("limites_credito_vencimento_ate_360_dias", "Sem dados");
+            responseScr.put("limites_credito_vencimento_acima_360_dias", "Sem dados");
+            response.put("scr", "Sem dados");
+        }
+        if (allsData != null) {
+            HashMap<String, Object> responseAllsData = new HashMap<>();
+            responseAllsData.put("num_pendencias_financeiras_alls", allsData.getNum_pendencias_financeiras());
+            responseAllsData.put("valor_pendencias_financeiras_alls", allsData.getValor_pendencias_financeiras());
+            responseAllsData.put("num_recuperacoes_alls", allsData.getNum_recuperacoes());
+            responseAllsData.put("valor_recuperacoes_alls", allsData.getValor_recuperacoes());
+            responseAllsData.put("num_cheque_sem_fundo_alls", allsData.getNum_cheque_sem_fundo());
+            responseAllsData.put("num_protestos_alls", allsData.getNum_protestos());
+            responseAllsData.put("valor_protestos_alls", allsData.getValor_protestos());
+            responseAllsData.put("limite_sugerido_alls", allsData.getLimite_sugerido());
+            responseAllsData.put("num_restricoes_alls", allsData.getNum_restricoes());
+            responseAllsData.put("valor_restricoes", allsData.getValor_restricoes());
+            response.put("allsData", responseAllsData);
+        } else {
+            HashMap<String, Object> responseAllsData = new HashMap<>();
+            responseAllsData.put("num_pendencias_financeiras_alls", "Sem dados");
+            responseAllsData.put("valor_pendencias_financeiras_alls", "Sem dados");
+            responseAllsData.put("num_recuperacoes_alls", "Sem dados");
+            responseAllsData.put("valor_recuperacoes_alls", "Sem dados");
+            responseAllsData.put("num_cheque_sem_fundo_alls", "Sem dados");
+            responseAllsData.put("num_protestos_alls", "Sem dados");
+            responseAllsData.put("valor_protestos_alls", "Sem dados");
+            responseAllsData.put("limite_sugerido_alls", "Sem dados");
+            responseAllsData.put("num_restricoes_alls", "Sem dados");
+            responseAllsData.put("valor_restricoes", "Sem dados");
+            response.put("allsData", "Sem dados");
+        }
+        if (files != null) {
+            List<HashMap<String, Object>> listFiles = new ArrayList<>();
+            for (Files file : files) {
+                HashMap<String, Object> responseFile = new HashMap<>();
+                responseFile.put("tipoArquivo", file.getTipo_arquivo());
+                responseFile.put("url_arquivo", file.getUrl_arquivo());
+                responseFile.put("uploaded_in", file.getUploaded_in());
+                responseFile.put("file_name", file.getFile_name());
+                listFiles.add(responseFile);
+            }
+            response.put("files", listFiles);
+        } else {
+            response.put("files", "Sem arquivos");
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("/update")

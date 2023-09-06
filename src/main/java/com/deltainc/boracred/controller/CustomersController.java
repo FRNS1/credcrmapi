@@ -108,7 +108,6 @@ public class CustomersController {
             for (Customer customer : allCustomers) {
                 HashMap<String, Object> response = new HashMap<>();
                 Contacts contact = contactsRepository.findByCustomer(customer);
-                System.out.println(contact);
                 response.put("customerId", customer.getCustomer_id());
                 response.put("nome", customer.getNome_completo());
                 response.put("nomeFantasia", customer.getNome_fantasia());
@@ -128,7 +127,6 @@ public class CustomersController {
             for (Customer customer : allCustomers) {
                 HashMap<String, Object> response = new HashMap<>();
                 Contacts contact = contactsRepository.findByCustomer(customer);
-                System.out.println(contact);
                 response.put("customerId", customer.getCustomer_id());
                 response.put("nome", customer.getNome_completo());
                 response.put("nomeFantasia", customer.getNome_fantasia());

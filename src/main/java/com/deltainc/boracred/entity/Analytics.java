@@ -62,4 +62,19 @@ public class Analytics {
     @Column
     private boolean pep;
 
+    @Column
+    private int num_cheques_devolvidos;
+
+    @Column
+    private float valor_cheques_devolvidos;
+
+    @Column
+    private float valor_pefins;
+
+    @Column
+    private int num_pefins;
+
+    @Column
+    private int empresas_nao_informadas;
+
 }
