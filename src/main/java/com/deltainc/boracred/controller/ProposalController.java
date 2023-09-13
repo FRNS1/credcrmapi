@@ -154,10 +154,12 @@ public class ProposalController {
         Proposal proposal = optionalProposal.get();
         Customer customer = proposal.getCustomer();
         Analytics analytics = analyticsRepository.findByProposal(proposal);
+        System.out.println(analytics);
         SCR scr = scrRepository.findByProposal(proposal);
         AllsData allsData = allsDataRepository.findByProposal(proposal);
         List<Files> files = filesRepository.findByProposal(proposal);
         HashMap<String, Object> response = new HashMap<>();
+        response.put("isCnpj", customer.is_cnpj());
         response.put("proposalId", proposal.getProposal_id());
         response.put("customerName", customer.getNome_completo());
         response.put("customerRazaoSocial", customer.getRazao_social());
@@ -167,7 +169,7 @@ public class ProposalController {
         response.put("taxa", proposal.getTaxa());
         response.put("corban", proposal.getCorban());
         response.put("status", proposal.getStatus());
-        response.put("montante", proposal.getProposal_id());
+        response.put("montante", proposal.getMontante());
         response.put("valorLiberado", proposal.getValor_liberado());
         response.put("prazo", proposal.getPrazo());
         response.put("dataAbertura", proposal.getData_abertura());
@@ -198,25 +200,10 @@ public class ProposalController {
             responseAnalytics.put("empresas_nao_informadas", analytics.getEmpresas_nao_informadas());
             response.put("analytics", responseAnalytics);
         } else {
-            HashMap<String, Object> responseAnalytics = new HashMap<>();
-            responseAnalytics.put("num_titulos_protestados", "Sem dados");
-            responseAnalytics.put("score", "Sem dados");
-            responseAnalytics.put("num_refins", "Sem dados");
-            responseAnalytics.put("valor_cadins", "Sem dados");
-            responseAnalytics.put("valor_iss", "Sem dados");
-            responseAnalytics.put("num_processos", "Sem dados");
-            responseAnalytics.put("valor_processos", "Sem dados");
-            responseAnalytics.put("num_uf_processos", "Sem dados");
-            responseAnalytics.put("divida_ativa", "Sem dados");
-            responseAnalytics.put("valor_titulos_protestados", "Sem dados");
-            responseAnalytics.put("risco", "Sem dados");
-            responseAnalytics.put("pep", "Sem dados");
-            responseAnalytics.put("num_chuques_devolvidos", "Sem dados");
-            responseAnalytics.put("valor_cheques_devolvidos", "Sem dados");
-            responseAnalytics.put("valor_pefins", "Sem dados");
-            responseAnalytics.put("num_pefins", "Sem dados");
-            responseAnalytics.put("empresas_nao_informadas", "Sem dados");
-            response.put("analytics", "Sem dados");
+            Analytics newAnalytics = new Analytics();
+            newAnalytics.setProposal(proposal);
+            analyticsRepository.save(newAnalytics);
+            response.put("newAnalyticsId", newAnalytics.getAnalytics_id());
         }
         if (scr != null) {
             HashMap<String, Object> responseScr = new HashMap<>();
@@ -248,34 +235,10 @@ public class ProposalController {
             responseScr.put("limites_credito_vencimento_acima_360_dias", scr.getLimites_credito_vencimento_acima_360_dias());
             response.put("scr", responseScr);
         } else {
-            HashMap<String, Object> responseScr = new HashMap<>();
-            responseScr.put("vencer_valor_total", "Sem dados");
-            responseScr.put("vencer_ate_30_dias_vencidos_ate_14_dias", "Sem dados");
-            responseScr.put("vencer_31_60_dias", "Sem dados");
-            responseScr.put("vencer_61_90_dias", "Sem dados");
-            responseScr.put("vencer_181_360_dias", "Sem dados");
-            responseScr.put("vencer_acima_360_dias", "Sem dados");
-            responseScr.put("vencer_indeterminado", "Sem dados");
-            responseScr.put("vencido_total", "Sem dados");
-            responseScr.put("vencido_15_30_dias", "Sem dados");
-            responseScr.put("vencido_31_60_dias", "Sem dados");
-            responseScr.put("vencido_61_90_dias", "Sem dados");
-            responseScr.put("vencido_91_180_dias", "Sem dados");
-            responseScr.put("vencido_181_360_dias", "Sem dados");
-            responseScr.put("vencido_acima_360_dias", "Sem dados");
-            responseScr.put("prejuizo_total", "Sem dados");
-            responseScr.put("prejuizo_ate_12_meses", "Sem dados");
-            responseScr.put("prejuizo_acima_12_meses", "Sem dados");
-            responseScr.put("coobrigacao_total", "Sem dados");
-            responseScr.put("coobrigacao_assumida", "Sem dados");
-            responseScr.put("coobrigacao_prestadas", "Sem dados");
-            responseScr.put("creditos_liberar_total", "Sem dados");
-            responseScr.put("creditos_liberar_ate_360_dias", "Sem dados");
-            responseScr.put("creditos_liberar_acima_360_dias", "Sem dados");
-            responseScr.put("limites_credito_valor_total", "Sem dados");
-            responseScr.put("limites_credito_vencimento_ate_360_dias", "Sem dados");
-            responseScr.put("limites_credito_vencimento_acima_360_dias", "Sem dados");
-            response.put("scr", "Sem dados");
+            SCR newScr = new SCR();
+            newScr.setProposal(proposal);
+            scrRepository.save(newScr);
+            response.put("newScrId", newScr.getScr_id());
         }
         if (allsData != null) {
             HashMap<String, Object> responseAllsData = new HashMap<>();
@@ -291,18 +254,10 @@ public class ProposalController {
             responseAllsData.put("valor_restricoes", allsData.getValor_restricoes());
             response.put("allsData", responseAllsData);
         } else {
-            HashMap<String, Object> responseAllsData = new HashMap<>();
-            responseAllsData.put("num_pendencias_financeiras_alls", "Sem dados");
-            responseAllsData.put("valor_pendencias_financeiras_alls", "Sem dados");
-            responseAllsData.put("num_recuperacoes_alls", "Sem dados");
-            responseAllsData.put("valor_recuperacoes_alls", "Sem dados");
-            responseAllsData.put("num_cheque_sem_fundo_alls", "Sem dados");
-            responseAllsData.put("num_protestos_alls", "Sem dados");
-            responseAllsData.put("valor_protestos_alls", "Sem dados");
-            responseAllsData.put("limite_sugerido_alls", "Sem dados");
-            responseAllsData.put("num_restricoes_alls", "Sem dados");
-            responseAllsData.put("valor_restricoes", "Sem dados");
-            response.put("allsData", "Sem dados");
+            AllsData newAllsData = new AllsData();
+            newAllsData.setProposal(proposal);
+            allsDataRepository.save(newAllsData);
+            response.put("newAllsDataId", newAllsData.getSearch_id());
         }
         if (files != null) {
             List<HashMap<String, Object>> listFiles = new ArrayList<>();

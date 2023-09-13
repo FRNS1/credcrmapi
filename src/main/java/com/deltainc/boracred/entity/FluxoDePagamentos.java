@@ -54,4 +54,7 @@ public class FluxoDePagamentos {
     @Column
     private LocalDate data_pagamento;
 
+    @Column
+    private String boleto;
+
 }

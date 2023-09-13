@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AnalyticsRegisterDTO {
 
-    private int analytics;
-
     private int proposal;
 
     private int customer;
