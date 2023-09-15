@@ -16,7 +16,7 @@ import java.util.UUID;
 public class Proposal {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer proposal_id;
+    private Integer proposalId;
 
     @ManyToOne
     @JoinColumn(name = "customer.customer_id")

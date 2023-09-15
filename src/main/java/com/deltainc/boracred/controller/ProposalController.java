@@ -42,6 +42,29 @@ public class ProposalController {
     @Autowired
     FilesRepository filesRepository;
 
+    @Autowired
+    ContactsRepository contactsRepository;
+
+    @GetMapping("/loans/getproposal/info/{id}")
+    public ResponseEntity getProposalDetails(@PathVariable Integer id){
+        try {
+            Map<String, Object> response = new HashMap<>();
+            Optional<Proposal> optionalProposal = proposalRepository.findById(id);
+            if (optionalProposal.isPresent()){
+                Proposal proposal = optionalProposal.get();
+                Contacts contact = contactsRepository.findByCustomer(proposal.getCustomer());
+                response.put("proposal", proposal);
+                response.put("contact", contact);
+            }
+        if (optionalProposal.isPresent()){
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Proposal not found", HttpStatus.OK);
+        }} catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/register")
     public ResponseEntity registerProposal(@RequestBody ProposalRegisterDTO registerData){
         try {
@@ -112,7 +135,7 @@ public class ProposalController {
                     response.put("cpf", customer.getCpf());
                     response.put("cnpj", customer.getCnpj());
                     response.put("status", proposal.getStatus());
-                    response.put("proposalId", proposal.getProposal_id());
+                    response.put("proposalId", proposal.getProposalId());
                     listResponse.add(response);
                 }
             }
@@ -135,7 +158,7 @@ public class ProposalController {
                     response2.put("cpf", customer.getCpf());
                     response2.put("cnpj", customer.getCnpj());
                     response2.put("status", proposal.getStatus());
-                    response2.put("proposalId", proposal.getProposal_id());
+                    response2.put("proposalId", proposal.getProposalId());
                     listResponse.add(response);
                 }
             }
@@ -160,7 +183,7 @@ public class ProposalController {
         List<Files> files = filesRepository.findByProposal(proposal);
         HashMap<String, Object> response = new HashMap<>();
         response.put("isCnpj", customer.is_cnpj());
-        response.put("proposalId", proposal.getProposal_id());
+        response.put("proposalId", proposal.getProposalId());
         response.put("customerName", customer.getNome_completo());
         response.put("customerRazaoSocial", customer.getRazao_social());
         response.put("cnpj", customer.getCnpj());

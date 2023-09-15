@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 @Data
 @Entity
-@Table(name="fluxo_pagamentos")
+@Table
 public class FluxoDePagamentos {
 
     @Id
@@ -21,11 +21,7 @@ public class FluxoDePagamentos {
 
     @ManyToOne
     @JoinColumn(name = "proposal.proposal_id")
-    private Proposal proposal_id;
-
-    @ManyToOne
-    @JoinColumn(name = "customer.customer_id")
-    private Customer customer_id;
+    private Proposal proposal;
 
     @Column
     private int num_parcela;

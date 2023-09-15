@@ -114,8 +114,14 @@ public class CustomersController {
                 response.put("razaoSocial", customer.getRazao_social());
                 response.put("cnpj", customer.getCnpj());
                 response.put("cpf", customer.getCpf());
-                response.put("email", contact.getEmail());
-                response.put("telefone", contact.getTelefone());
+                if (contact == null) {
+                    response.put("email", "Sem email");
+                    response.put("telefone", "Sem telefone");
+                } else {
+                    response.put("email", contact.getEmail());
+                    response.put("telefone", contact.getTelefone());
+                }
+                System.out.println("FOI");
                 listResponse.add(response);
             }
             return new ResponseEntity(listResponse, HttpStatus.OK);
@@ -133,8 +139,14 @@ public class CustomersController {
                 response.put("razaoSocial", customer.getRazao_social());
                 response.put("cnpj", customer.getCnpj());
                 response.put("cpf", customer.getCpf());
-                response.put("email", contact.getEmail());
-                response.put("telefone", contact.getTelefone());
+                if (contact == null) {
+                    response.put("email", "Sem email");
+                    response.put("telefone", "Sem telefone");
+                } else {
+                    response.put("email", contact.getEmail());
+                    response.put("telefone", contact.getTelefone());
+                }
+                System.out.println("FOI");
                 listResponse.add(response);
             }
             return new ResponseEntity(listResponse, HttpStatus.OK);
@@ -152,8 +164,14 @@ public class CustomersController {
                 response.put("razaoSocial", customer.getRazao_social());
                 response.put("cnpj", customer.getCnpj());
                 response.put("cpf", customer.getCpf());
-                response.put("email", contact.getEmail());
-                response.put("telefone", contact.getTelefone());
+                if (contact == null) {
+                    response.put("email", "Sem email");
+                    response.put("telefone", "Sem telefone");
+                } else {
+                    response.put("email", contact.getEmail());
+                    response.put("telefone", contact.getTelefone());
+                }
+                System.out.println("FOI");
                 listResponse.add(response);
             }
             return new ResponseEntity(listResponse, HttpStatus.OK);
@@ -180,11 +198,19 @@ public class CustomersController {
             response.put("razaoSocial", customer.getRazao_social());
             response.put("segmento", customer.getSegmento());
             response.put("dataAbertura", customer.getData_abertura());
-            response.put("cep", address.getCep());
-            response.put("logradouro", address.getLogradouro());
-            response.put("bairro", address.getBairro());
-            response.put("cidade", address.getCidade());
-            response.put("pais", address.getPais());
+            if (address == null){
+                response.put("cep", "Sem dados");
+                response.put("logradouro", "Sem dados");
+                response.put("bairro", "Sem dados");
+                response.put("cidade", "Sem dados");
+                response.put("pais", "Sem dados");
+            } else {
+                response.put("cep", address.getCep());
+                response.put("logradouro", address.getLogradouro());
+                response.put("bairro", address.getBairro());
+                response.put("cidade", address.getCidade());
+                response.put("pais", address.getPais());
+            }
             response.put("telefone", contact.getTelefone());
             response.put("email", contact.getEmail());
             return new ResponseEntity<>(response, HttpStatus.OK);
