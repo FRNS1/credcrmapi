@@ -105,23 +105,23 @@ public class CustomersController {
         List<HashMap<String, Object>> listResponse = new ArrayList<>();
         if ("MASTER".equals(data.getGrupo()) || "RISK".equals(data.getGrupo())) {
             List<Customer> allCustomers = customerRepository.findAll();
+            System.out.println(allCustomers);
             for (Customer customer : allCustomers) {
                 HashMap<String, Object> response = new HashMap<>();
-                Contacts contact = contactsRepository.findByCustomer(customer);
+                try {
+                    Contacts contact = contactsRepository.findByCustomer(customer);
+                    response.put("email", contact.getEmail());
+                    response.put("telefone", contact.getTelefone());
+                } catch(Exception e) {
+                    response.put("email", "Sem email");
+                    response.put("telefone", "Sem telefone");
+                }
                 response.put("customerId", customer.getCustomer_id());
                 response.put("nome", customer.getNome_completo());
                 response.put("nomeFantasia", customer.getNome_fantasia());
                 response.put("razaoSocial", customer.getRazao_social());
                 response.put("cnpj", customer.getCnpj());
                 response.put("cpf", customer.getCpf());
-                if (contact == null) {
-                    response.put("email", "Sem email");
-                    response.put("telefone", "Sem telefone");
-                } else {
-                    response.put("email", contact.getEmail());
-                    response.put("telefone", contact.getTelefone());
-                }
-                System.out.println("FOI");
                 listResponse.add(response);
             }
             return new ResponseEntity(listResponse, HttpStatus.OK);
