@@ -347,44 +347,6 @@ public class ProposalController {
                 proposal.setObservacao_analista(data.getObservacao_analista());
             }
             proposalRepository.save(proposal);
-            Analytics analytics = new Analytics();
-
-            analytics.setProposal(proposal);
-
-            if (analytics.getNum_titulos_protestados() != data.getNum_titulos_protestados()){
-                analytics.setNum_titulos_protestados(data.getNum_titulos_protestados());
-            }
-            if (analytics.getScore() != data.getScore()){
-                analytics.setScore(data.getScore());
-            }
-            if (analytics.getNum_refins() != data.getNum_refins()){
-                analytics.setNum_refins((data.getNum_refins()));
-            }
-            if (analytics.getValor_cadins() != data.getValor_cadins()){
-                analytics.setValor_cadins(data.getValor_cadins());
-            }
-            if (analytics.getValor_iss() != data.getValor_iss()){
-                analytics.setValor_iss(data.getValor_iss());
-            }
-            if (analytics.getNum_processos() != data.getNum_processos()){
-                analytics.setNum_processos(data.getNum_processos());
-            }
-            if (analytics.getValor_processos() != data.getValor_processos()){
-                analytics.setValor_processos(data.getValor_processos());
-            }
-            if (analytics.getNum_uf_processos() != data.getNum_uf_processos()){
-                analytics.setNum_uf_processos(data.getNum_uf_processos());
-            }
-            if (analytics.getDivida_ativa() != data.getDivida_ativa()){
-                analytics.setDivida_ativa(data.getDivida_ativa());
-            }
-            if (analytics.getValor_titulos_protestados() != data.getValor_titulos_protestados()){
-                analytics.setValor_titulos_protestados(data.getValor_titulos_protestados());
-            }
-            if (analytics.getRisco() != data.getRisco()){
-                analytics.setRisco(data.getRisco());
-            }
-            analyticsRepository.save(analytics);
         }
         return new ResponseEntity<>("Updated", HttpStatus.OK);
     }
