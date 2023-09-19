@@ -299,7 +299,7 @@ public class ProposalController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     public ResponseEntity update(@RequestBody ProposalUpdateDTO data){
         Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal_id());
         if (optionalProposal.isPresent()){
