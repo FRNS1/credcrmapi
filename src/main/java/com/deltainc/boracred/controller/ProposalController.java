@@ -313,7 +313,7 @@ public class ProposalController {
             if (proposal.getCorban() != data.getCorban()){
                 proposal.setCorban(data.getCorban());
             }
-            if (!proposal.getStatus().equals(data.getStatus())){
+            if (data.getStatus() != null && !data.getStatus().equals(proposal.getStatus())) {
                 proposal.setStatus(data.getStatus());
             }
             if (proposal.getMontante() != data.getMontante()){
