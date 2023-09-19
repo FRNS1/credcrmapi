@@ -15,7 +15,8 @@ import java.util.UUID;
 public class Users {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "sequence")
+    @SequenceGenerator(name = "sequence", sequenceName = "sequence")
     private Integer user_id;
 
     @Column

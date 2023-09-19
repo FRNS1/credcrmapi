@@ -17,7 +17,8 @@ import java.util.UUID;
 public class AceiteScr {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "sequence")
+    @SequenceGenerator(name = "sequence", sequenceName = "sequence")
     private Integer aceite_id;
 
     @ManyToOne

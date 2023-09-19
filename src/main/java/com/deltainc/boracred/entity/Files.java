@@ -16,7 +16,8 @@ import java.time.LocalDate;
 public class Files {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "sequence")
+    @SequenceGenerator(name = "sequence", sequenceName = "sequence")
     private Integer files_id;
 
     @ManyToOne

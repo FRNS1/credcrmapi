@@ -13,7 +13,8 @@ import lombok.*;
 public class SCR {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "sequence")
+    @SequenceGenerator(name = "sequence", sequenceName = "sequence")
     private Integer scr_id;
 
     @ManyToOne

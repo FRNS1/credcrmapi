@@ -13,7 +13,8 @@ import lombok.*;
 public class AllsData {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "sequence")
+    @SequenceGenerator(name = "sequence", sequenceName = "sequence")
     private Integer search_id;
 
     @ManyToOne
