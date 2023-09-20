@@ -299,10 +299,30 @@ public class ProposalController {
 
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody ProposalUpdateDTO data){
-        Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal_id());
-        System.out.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
-        System.out.println(data);
-        return new ResponseEntity<>("Updated", HttpStatus.OK);
+        try {
+            Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal_id());
+            if (optionalProposal.isPresent()){
+                Proposal proposal = optionalProposal.get();
+                proposal.setValor_desejado(data.getValor_desejado());
+                proposal.setTaxa(data.getTaxa());
+                proposal.setCorban(data.getCorban());
+                proposal.setStatus(data.getStatus());
+                proposal.setMontante(data.getMontante());
+                proposal.setValor_liberado(data.getValor_liberado());
+                proposal.setPrazo(data.getPrazo());
+                proposal.setData_abertura(data.getData_abertura());
+                proposal.setData_primeira_parcela(data.getData_primeira_parcela());
+                proposal.setTotal_juros(data.getTotal_juros());
+                proposal.setStatus_contrato(data.getStatus_contrato());
+                proposal.setMotivo_reprovacao(data.getMotivo_reprovacao());
+                proposal.setObservacao_cliente(data.getObservacao_cliente());
+                proposal.setObservacao_analista(data.getObservacao_analista());
+                proposalRepository.save(proposal);
+            }
+            return new ResponseEntity<>("Updated", HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
