@@ -1,6 +1,8 @@
 package com.deltainc.boracred.controller;
 
+import com.amazonaws.Response;
 import com.deltainc.boracred.dto.AnalyticsRegisterDTO;
+import com.deltainc.boracred.dto.AnalyticsUpdateDTO;
 import com.deltainc.boracred.entity.Analytics;
 import com.deltainc.boracred.entity.Customer;
 import com.deltainc.boracred.entity.Proposal;
@@ -61,6 +63,38 @@ public class AnalyticsController {
         analytics.setEmpresas_nao_informadas(data.getEmpresas_nao_informadas());
         analyticsRepository.save(analytics);
         return new ResponseEntity<>("Created", HttpStatus.OK);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity update(@RequestBody AnalyticsUpdateDTO data){
+        try{
+            Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposalId());
+            if (optionalProposal.isPresent()){
+                Proposal proposal = optionalProposal.get();
+                Analytics analytics = analyticsRepository.findByProposal(proposal);
+                analytics.setNum_titulos_protestados(data.getNumTitulosProtestados());
+                analytics.setScore(data.getScore());
+                analytics.setNum_refins(data.getNumRefins());
+                analytics.setValor_cadins(data.getValorCadins());
+                analytics.setValor_iss(data.getValorIss());
+                analytics.setNum_processos(data.getNumProcessos());
+                analytics.setValor_processos(data.getValorProcessos());
+                analytics.setNum_uf_processos(data.getNumUfProcessos());
+                analytics.setDivida_ativa(data.getDividaAtiva());
+                analytics.setValor_titulos_protestados(data.getValorTitulosProtestados());
+                analytics.setRisco(data.getRisco());
+                analytics.setPep(data.isPep());
+                analytics.setNum_cheques_devolvidos(data.getNumChequesDevolvidos());
+                analytics.setValor_cheques_devolvidos(data.getValorChequesDevolvidos());
+                analytics.setValor_pefins(data.getValorPefins());
+                analytics.setNum_pefins(data.getNumPefins());
+                analytics.setEmpresas_nao_informadas(data.getEmpresasNaoInformadas());
+                analyticsRepository.save(analytics);
+            }
+            return new ResponseEntity<>("Updated", HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
