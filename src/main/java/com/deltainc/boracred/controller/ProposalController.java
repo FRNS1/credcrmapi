@@ -178,7 +178,7 @@ public class ProposalController {
         Analytics analytics = analyticsRepository.findByProposal(proposal);
         SCR scr = scrRepository.findByProposal(proposal);
         AllsData allsData = allsDataRepository.findByProposal(proposal);
-        List<Files> files = filesRepository.findByProposal(proposal);
+        List<Files> files = filesRepository.findByProposal(proposal.getProposalId());
         System.out.println(files);
         HashMap<String, Object> response = new HashMap<>();
         response.put("isCnpj", customer.is_cnpj());

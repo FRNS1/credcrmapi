@@ -62,10 +62,10 @@ public class Proposal {
     @Column
     private String motivo_reprovacao;
 
-    @Column
+    @Column(length = 10000)
     private String observacao_cliente;
 
-    @Column
+    @Column(length = 10000)
     private String observacao_analista;
 
 }
