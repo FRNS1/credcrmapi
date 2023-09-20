@@ -178,7 +178,7 @@ public class ProposalController {
         Analytics analytics = analyticsRepository.findByProposal(proposal);
         SCR scr = scrRepository.findByProposal(proposal);
         AllsData allsData = allsDataRepository.findByProposal(proposal);
-        List<Files> files = filesRepository.findByProposal(proposal);
+        Files files = filesRepository.findByProposal(proposal);
         System.out.println(files);
         HashMap<String, Object> response = new HashMap<>();
         response.put("isCnpj", customer.is_cnpj());
@@ -282,20 +282,20 @@ public class ProposalController {
             allsDataRepository.save(newAllsData);
             response.put("newAllsDataId", newAllsData.getSearch_id());
         }
-        if (files != null) {
-            List<HashMap<String, Object>> listFiles = new ArrayList<>();
-            for (Files file : files) {
-                HashMap<String, Object> responseFile = new HashMap<>();
-                responseFile.put("tipoArquivo", file.getTipo_arquivo());
-                responseFile.put("url_arquivo", file.getUrl_arquivo());
-                responseFile.put("uploaded_in", file.getUploaded_in());
-                responseFile.put("file_name", file.getFile_name());
-                listFiles.add(responseFile);
-            }
-            response.put("files", listFiles);
-        } else {
-            response.put("files", "Sem arquivos");
-        }
+//        if (files != null) {
+//            List<HashMap<String, Object>> listFiles = new ArrayList<>();
+//            for (Files file : files) {
+//                HashMap<String, Object> responseFile = new HashMap<>();
+//                responseFile.put("tipoArquivo", file.getTipo_arquivo());
+//                responseFile.put("url_arquivo", file.getUrl_arquivo());
+//                responseFile.put("uploaded_in", file.getUploaded_in());
+//                responseFile.put("file_name", file.getFile_name());
+//                listFiles.add(responseFile);
+//            }
+//            response.put("files", listFiles);
+//        } else {
+//            response.put("files", "Sem arquivos");
+//        }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
