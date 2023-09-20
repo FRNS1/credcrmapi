@@ -302,66 +302,53 @@ public class ProposalController {
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody ProposalUpdateDTO data){
         Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal_id());
-        if (optionalProposal.isPresent()){
-            Proposal proposal = optionalProposal.get();
-            if (proposal.getValor_desejado() != data.getValor_desejado()){
-                proposal.setValor_desejado(data.getValor_desejado());
-            }
-            if (proposal.getTaxa() != data.getTaxa()){
-                proposal.setTaxa(data.getTaxa());
-            }
-            if (proposal.getCorban() != data.getCorban()){
-                proposal.setCorban(data.getCorban());
-            }
-            if (proposal.getStatus() != null) {
-                if (!data.getStatus().equals(proposal.getStatus())) {
-                    proposal.setStatus(data.getStatus());
-                }
-            }
-            if (proposal.getMontante() != data.getMontante()){
-                proposal.setMontante(data.getMontante());
-            }
-            if (proposal.getValor_liberado() != data.getMontante()){
-                proposal.setValor_liberado(data.getValor_liberado());
-            }
-            if (proposal.getPrazo() != data.getPrazo()){
-                proposal.setPrazo(data.getPrazo());
-            }
-            if (proposal.getData_abertura() != null) {
-                if (!proposal.getData_abertura().equals(data.getData_abertura())) {
-                    proposal.setData_abertura(data.getData_abertura());
-                }
-            }
-            if (proposal.getData_primeira_parcela() != null) {
-                if (!proposal.getData_primeira_parcela().equals(data.getData_primeira_parcela())) {
-                    proposal.setData_primeira_parcela(data.getData_primeira_parcela());
-                }
-            }
-            if (proposal.getTotal_juros() != data.getTotal_juros()){
-                proposal.setTotal_juros(data.getTotal_juros());
-            }
-            if (proposal.getStatus_contrato() != null) {
-                if (!proposal.getStatus_contrato().equals(data.getStatus_contrato())) {
-                    proposal.setStatus_contrato(data.getStatus_contrato());
-                }
-            }
-            if (proposal.getMotivo_reprovacao() != null) {
-                if (!proposal.getMotivo_reprovacao().equals(data.getMotivo_reprovacao())) {
-                    proposal.setMotivo_reprovacao(data.getMotivo_reprovacao());
-                }
-            }
-            if (proposal.getObservacao_cliente() != null) {
-                if (!proposal.getObservacao_cliente().equals(data.getObservacao_cliente())) {
-                    proposal.setObservacao_cliente(data.getObservacao_cliente());
-                }
-            }
-            if (proposal.getObservacao_analista() != null) {
-                if (!proposal.getObservacao_analista().equals(data.getObservacao_analista())) {
-                    proposal.setObservacao_analista(data.getObservacao_analista());
-                }
-            }
-            proposalRepository.save(proposal);
-        }
+        System.out.println(data);
+//        if (optionalProposal.isPresent()){
+//            Proposal proposal = optionalProposal.get();
+//            if (proposal.getValor_desejado() != data.getValor_desejado()){
+//                proposal.setValor_desejado(data.getValor_desejado());
+//            }
+//            if (proposal.getTaxa() != data.getTaxa()){
+//                proposal.setTaxa(data.getTaxa());
+//            }
+//            if (proposal.getCorban() != data.getCorban()){
+//                proposal.setCorban(data.getCorban());
+//            }
+//            if (!data.getStatus().equals(proposal.getStatus())) {
+//                proposal.setStatus(data.getStatus());
+//            }
+//            if (proposal.getMontante() != data.getMontante()){
+//                proposal.setMontante(data.getMontante());
+//            }
+//            if (proposal.getValor_liberado() != data.getMontante()){
+//                proposal.setValor_liberado(data.getValor_liberado());
+//            }
+//            if (proposal.getPrazo() != data.getPrazo()){
+//                proposal.setPrazo(data.getPrazo());
+//            }
+//            if (!proposal.getData_abertura().equals(data.getData_abertura())){
+//                proposal.setData_abertura(data.getData_abertura());
+//            }
+//            if (!proposal.getData_primeira_parcela().equals(data.getData_primeira_parcela())){
+//                proposal.setData_primeira_parcela(data.getData_primeira_parcela());
+//            }
+//            if (proposal.getTotal_juros() != data.getTotal_juros()){
+//                proposal.setTotal_juros(data.getTotal_juros());
+//            }
+//            if (!proposal.getStatus_contrato().equals(data.getStatus_contrato())){
+//                proposal.setStatus_contrato(data.getStatus_contrato());
+//            }
+//            if (!proposal.getMotivo_reprovacao().equals(data.getMotivo_reprovacao())){
+//                proposal.setMotivo_reprovacao(data.getMotivo_reprovacao());
+//            }
+//            if (!proposal.getObservacao_cliente().equals(data.getObservacao_cliente())){
+//                proposal.setObservacao_cliente(data.getObservacao_cliente());
+//            }
+//            if (!proposal.getObservacao_analista().equals(data.getObservacao_analista())){
+//                proposal.setObservacao_analista(data.getObservacao_analista());
+//            }
+//            proposalRepository.save(proposal);
+//        }
         return new ResponseEntity<>("Updated", HttpStatus.OK);
     }
 
