@@ -232,6 +232,7 @@ public class ProposalController {
             responseScr.put("vencer_ate_30_dias_vencidos_ate_14_dias", scr.getVencer_ate_30_dias_vencidos_ate_14_dias());
             responseScr.put("vencer_31_60_dias", scr.getVencer_31_60_dias());
             responseScr.put("vencer_61_90_dias", scr.getVencer_61_90_dias());
+            responseScr.put("vencer_91_180_dias", scr.getVencer_91_180_dias());
             responseScr.put("vencer_181_360_dias", scr.getVencer_181_360_dias());
             responseScr.put("vencer_acima_360_dias", scr.getVencer_acima_360_dias());
             responseScr.put("vencer_indeterminado", scr.getVencer_indeterminado());
