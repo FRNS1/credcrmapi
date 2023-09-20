@@ -284,6 +284,7 @@ public class ProposalController {
             response.put("newAllsDataId", newAllsData.getSearch_id());
         }
         if (files != null) {
+            System.out.println("Não é nulll");
             List<HashMap<String, Object>> listFiles = new ArrayList<>();
             for (Files file : files) {
                 HashMap<String, Object> responseFile = new HashMap<>();
@@ -295,6 +296,7 @@ public class ProposalController {
             }
             response.put("files", listFiles);
         } else {
+            System.out.println("é nulll");
             response.put("files", "Sem arquivos");
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
