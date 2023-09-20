@@ -21,6 +21,8 @@ public class ScrRegisterDTO {
 
     private Float vencer_61_90_dias;
 
+    private Float vencer_91_180_dias;
+
     private Float vencer_181_360_dias;
 
     private Float vencer_acima_360_dias;
