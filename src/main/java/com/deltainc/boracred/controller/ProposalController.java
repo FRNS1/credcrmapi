@@ -179,6 +179,7 @@ public class ProposalController {
         SCR scr = scrRepository.findByProposal(proposal);
         AllsData allsData = allsDataRepository.findByProposal(proposal);
         List<Files> files = filesRepository.findByProposal(proposal);
+        System.out.println(files);
         HashMap<String, Object> response = new HashMap<>();
         response.put("isCnpj", customer.is_cnpj());
         response.put("proposalId", proposal.getProposalId());
