@@ -300,6 +300,7 @@ public class ProposalController {
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody ProposalUpdateDTO data){
         Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal_id());
+        System.out.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
         System.out.println(data);
         return new ResponseEntity<>("Updated", HttpStatus.OK);
     }
