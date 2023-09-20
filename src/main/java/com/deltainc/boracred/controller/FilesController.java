@@ -46,8 +46,7 @@ public class FilesController {
         newFile.setProposal(proposal);
         newFile.setTipo_arquivo(data.getTipoArquivo());
         newFile.setFile_name(data.getFilaName());
-        newFile.setUrl_arquivo(data.getUrl());
-//        newFile.setUrl_arquivo("https://docsbora.s3.amazonaws.com/" + fileName);
+        newFile.setUrl_arquivo("https://docsbora.s3.amazonaws.com/" + fileName);
         filesRepository.save(newFile);
         return new ResponseEntity<>("Created", HttpStatus.CREATED);
     }
