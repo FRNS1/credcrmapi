@@ -74,6 +74,7 @@ public class SCRController {
                 Proposal proposal = optionalProposal.get();
                 SCR scr = scrRepository.findByProposal(proposal);
                 if (scr != null) {
+                    System.out.println(scr);
                     scr.setVencer_valor_total(data.getVencer_valor_total());
                     scr.setVencer_ate_30_dias_vencidos_ate_14_dias(data.getVencer_ate_30_dias_vencidos_ate_14_dias());
                     scr.setVencer_31_60_dias(data.getVencer_31_60_dias());
