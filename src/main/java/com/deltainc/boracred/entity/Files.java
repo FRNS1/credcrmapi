@@ -19,7 +19,7 @@ public class Files {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer files_id;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name="proposal.proposal_id")
     private Proposal proposal;
 
