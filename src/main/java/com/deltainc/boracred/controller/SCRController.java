@@ -104,6 +104,7 @@ public class SCRController {
                     scr.setLimites_credito_vencimento_acima_360_dias(data.getLimites_credito_vencimento_acima_360_dias());
                     scrRepository.save(scr);
                 } else {
+                    System.out.println("scr");
                     SCR newScr = new SCR();
                     newScr.setVencer_valor_total(data.getVencer_valor_total());
                     newScr.setVencer_ate_30_dias_vencidos_ate_14_dias(data.getVencer_ate_30_dias_vencidos_ate_14_dias());
