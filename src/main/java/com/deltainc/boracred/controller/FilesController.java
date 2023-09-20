@@ -32,6 +32,7 @@ public class FilesController {
     @PostMapping("/upload")
     public ResponseEntity upload(@RequestParam(name = "file") MultipartFile file){
         String fileNameWithML = FileUploadService.uploadFile(file);
+        System.out.println(file);
         fileNameWithMLGeneral.setFileName(fileNameWithML);
         return new ResponseEntity<>("Uploaded", HttpStatus.CREATED);
     }
