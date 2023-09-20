@@ -15,8 +15,7 @@ import java.util.UUID;
 public class Products {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "sequence")
-    @SequenceGenerator(name = "sequence", sequenceName = "sequence")
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer products_id;
 
     @ManyToOne
