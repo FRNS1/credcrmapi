@@ -292,6 +292,7 @@ public class ProposalController {
                 responseFile.put("url_arquivo", file.getUrl_arquivo());
                 responseFile.put("uploaded_in", file.getUploaded_in());
                 responseFile.put("file_name", file.getFile_name());
+                System.out.println(file.getUrl_arquivo());
                 listFiles.add(responseFile);
             }
             response.put("files", listFiles);
