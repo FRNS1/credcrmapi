@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface FilesRepository extends JpaRepository<Files, Integer> {
 
-    Files findByProposal(Proposal proposal);
+    List<Files> findByProposal(Proposal proposal);
 
 }
