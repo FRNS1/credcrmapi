@@ -99,7 +99,6 @@ public class ProposalController {
             for (Proposal proposal : proposals) {
                 HashMap<String, Object> response = new HashMap<>();
                 Users user = proposal.getUser();
-                System.out.println(user);
                 response.put("tipo", customer.is_cnpj());
                 response.put("username", user.getUsername());
                 response.put("business", customer.getBusiness());
@@ -177,7 +176,6 @@ public class ProposalController {
         Proposal proposal = optionalProposal.get();
         Customer customer = proposal.getCustomer();
         Analytics analytics = analyticsRepository.findByProposal(proposal);
-        System.out.println(analytics);
         SCR scr = scrRepository.findByProposal(proposal);
         AllsData allsData = allsDataRepository.findByProposal(proposal);
         List<Files> files = filesRepository.findByProposal(proposal);
