@@ -6,6 +6,7 @@ import com.deltainc.boracred.dto.ProposalRegisterDTO;
 import com.deltainc.boracred.dto.ProposalUpdateDTO;
 import com.deltainc.boracred.entity.*;
 import com.deltainc.boracred.repositories.*;
+import com.deltainc.boracred.services.EmailService;
 import com.deltainc.boracred.services.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,9 @@ public class ProposalController {
 
     @Autowired
     ContactsRepository contactsRepository;
+
+    @Autowired
+    public EmailService emailService;
 
     @GetMapping("/loans/getproposal/info/{id}")
     public ResponseEntity getProposalDetails(@PathVariable Integer id){
@@ -324,6 +328,24 @@ public class ProposalController {
                 proposal.setMotivo_reprovacao(data.getMotivo_reprovacao());
                 proposal.setObservacao_cliente(data.getObservacao_cliente());
                 proposal.setObservacao_analista(data.getObservacao_analista());
+                if (data.getStatus() == "Aprovado"){
+                    Customer customer = proposal.getCustomer();
+                    if (!customer.is_cnpj() == true) {
+                        try {
+                            emailService.sendEmailAprovado("joao.fernandes@deltaux.com.br", customer.getNome_completo(), proposal.getProposalId(), proposal.getTaxa(), proposal.getValor_desejado());
+                            System.out.println("email enviado");
+                        } catch (Exception e){
+                            System.out.println(e);
+                        }
+                    } else {
+                        try {
+                            emailService.sendEmailAprovado("joao.fernandes@deltaux.com.br", customer.getRazao_social(), proposal.getProposalId(), proposal.getTaxa(), proposal.getValor_desejado());
+                            System.out.println("email enviado");
+                        } catch (Exception e){
+                            System.out.println(e);
+                        }
+                    }
+                }
                 proposalRepository.save(proposal);
             }
             return new ResponseEntity<>("Updated", HttpStatus.OK);
