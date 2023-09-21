@@ -29,7 +29,8 @@ public class BoracredApplication extends SpringBootServletInitializer {
 			registry.addMapping("/**")
 					.allowedOrigins("*")
 					.allowedMethods("GET", "POST", "PUT", "DELETE")
-					.allowedHeaders("*");
+					.allowedHeaders("*")
+					.allowCredentials(true);;
 		}
 	}
 }
