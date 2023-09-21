@@ -88,6 +88,7 @@ public class ProposalController {
             emailsTo.add("joao.fernandes@deltaux.com.br");
             emailsTo.add("pedro.ricco@deltainvestor.com.br");
             emailsTo.add(user.getEmail());
+            proposalRepository.save(proposal);
             for (String to : emailsTo){
                 System.out.println(to);
                 if (customer.is_cnpj() != true) {
@@ -108,7 +109,6 @@ public class ProposalController {
                     }
                 }
             }
-            proposalRepository.save(proposal);
             return new ResponseEntity<>("Created", HttpStatus.CREATED);
         }catch(Exception error){
             Map<String, Object> response = new HashMap<>();
