@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+import com.deltainc.boracred.htmltemplates.EmailTemplates;
+
 @Service
 public class EmailService {
 
@@ -26,7 +28,7 @@ public class EmailService {
 
     public void sendEmailAprovado(String to, String nomeCliente, Integer idProposta, Float taxa, Float valorDesejado) throws Exception{
         String subject = String.format("O cliente %s, aceitou a proposta %d", nomeCliente, idProposta);
-        String htmlContent = loadHtmlFile("com/deltainc/boracred/htmltemplates/propostaaprovada.html");
+        String htmlContent = EmailTemplates.templateAprovado;
         htmlContent = htmlContent.replace("${nomeCliente}", nomeCliente);
         htmlContent = htmlContent.replace("${idProposta}", idProposta.toString());
         htmlContent = htmlContent.replace("${taxa}", taxa.toString());
