@@ -28,7 +28,7 @@ public class EmailService {
 
     public void sendEmailNovaProposta(String to, String nomeCliente, Integer idProposta, Float valorDesejado, Integer prazo) throws Exception{
         String subject = String.format("Nova proposta do cliente %s.", nomeCliente, idProposta);
-        String htmlContent = EmailTemplates.templateAprovado;
+        String htmlContent = EmailTemplates.templateNovaProposta;
         htmlContent = htmlContent.replace("${nomeCliente}", nomeCliente);
         htmlContent = htmlContent.replace("${idProposta}", idProposta.toString());
         htmlContent = htmlContent.replace("${valorLiberado}", valorDesejado.toString());
