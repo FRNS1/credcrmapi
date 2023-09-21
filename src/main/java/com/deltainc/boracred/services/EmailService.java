@@ -26,7 +26,7 @@ public class EmailService {
 
     public void sendEmailAprovado(String to, String nomeCliente, Integer idProposta, Float taxa, Float valorDesejado) throws Exception{
         String subject = String.format("O cliente %s, aceitou a proposta %d", nomeCliente, idProposta);
-        String htmlContent = loadHtmlFile("src/main/java/com/deltainc/boracred/htmltemplates/propostaaprovada.html");
+        String htmlContent = loadHtmlFile("com/deltainc/boracred/htmltemplates/propostaaprovada.html");
         htmlContent = htmlContent.replace("${nomeCliente}", nomeCliente);
         htmlContent = htmlContent.replace("${idProposta}", idProposta.toString());
         htmlContent = htmlContent.replace("${taxa}", taxa.toString());
