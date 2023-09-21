@@ -26,8 +26,10 @@ public class BoracredApplication extends SpringBootServletInitializer {
 
 		@Override
 		public void addCorsMappings(CorsRegistry registry) {
-			registry.addMapping("/**").allowedMethods("*");
+			registry.addMapping("/**")
+					.allowedOrigins("*")
+					.allowedMethods("GET", "POST", "PUT", "DELETE")
+					.allowedHeaders("*");
 		}
-	}
 
 }
