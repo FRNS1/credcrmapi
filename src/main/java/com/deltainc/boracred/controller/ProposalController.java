@@ -335,7 +335,7 @@ public class ProposalController {
                     Users user = proposal.getUser();
                     List<String> emailsTo = new ArrayList<>();
                     emailsTo.add("joao.fernandes@deltaux.com.br");
-                    emailsTo.add("ricardo.beto@deltaux.com.br");
+                    emailsTo.add("controladoria@deltaux.com.br");
 //                    emailsTo.add("pedro.ricco@deltainvestor.com.br");
 //                    emailsTo.add(user.getEmail());
                     for (String to : emailsTo) {

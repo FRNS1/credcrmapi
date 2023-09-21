@@ -161,7 +161,7 @@ public class EmailTemplates {
             "                                    <tr>\n" +
             "                                        <td class=\"v-container-padding-padding\" style=\"overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;\" align=\"left\">\n" +
             "\n" +
-            "                                            <h1 class=\"v-text-align v-line-height v-font-size\" style=\"margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-size: 22px;\"><strong>Olá, ${nomeCliente}!</strong></h1>\n" +
+            "                                            <h1 class=\"v-text-align v-line-height v-font-size\" style=\"margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-size: 22px;\"><strong>Olá!</strong></h1>\n" +
             "\n" +
             "                                        </td>\n" +
             "                                    </tr>\n" +
