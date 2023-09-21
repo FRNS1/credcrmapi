@@ -26,13 +26,14 @@ public class EmailService {
         sendHtmlEmail(to, subject, htmlContent);
     }
 
-    public void sendEmailAprovado(String to, String nomeCliente, Integer idProposta, Float taxa, Float valorDesejado) throws Exception{
+    public void sendEmailAprovado(String to, String nomeCliente, Integer idProposta, Float taxa, Float valorDesejado, Integer prazo) throws Exception{
         String subject = String.format("O cliente %s, aceitou a proposta %d", nomeCliente, idProposta);
         String htmlContent = EmailTemplates.templateAprovado;
         htmlContent = htmlContent.replace("${nomeCliente}", nomeCliente);
         htmlContent = htmlContent.replace("${idProposta}", idProposta.toString());
         htmlContent = htmlContent.replace("${taxa}", taxa.toString());
         htmlContent = htmlContent.replace("${valorLiberado}", valorDesejado.toString());
+        htmlContent = htmlContent.replace("${prazo}", prazo.toString());
         sendHtmlEmail(to, subject, htmlContent);
     }
 
