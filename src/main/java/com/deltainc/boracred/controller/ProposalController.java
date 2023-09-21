@@ -328,6 +328,7 @@ public class ProposalController {
                 proposal.setMotivo_reprovacao(data.getMotivo_reprovacao());
                 proposal.setObservacao_cliente(data.getObservacao_cliente());
                 proposal.setObservacao_analista(data.getObservacao_analista());
+                System.out.println(proposal.getStatus());
                 if (proposal.getStatus() == "Aprovado"){
                     System.out.println("aprovado");
                     Customer customer = proposal.getCustomer();
