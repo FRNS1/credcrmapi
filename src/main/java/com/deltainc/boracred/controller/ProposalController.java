@@ -329,7 +329,7 @@ public class ProposalController {
                 proposal.setObservacao_cliente(data.getObservacao_cliente());
                 proposal.setObservacao_analista(data.getObservacao_analista());
                 System.out.println(proposal.getStatus());
-                if (proposal.getStatus() == "Aprovado"){
+                if ("Aprovado".equals(proposal.getStatus())){
                     System.out.println("aprovado");
                     Customer customer = proposal.getCustomer();
                     if (customer.is_cnpj() != true) {
