@@ -99,6 +99,7 @@ public class ProposalController {
             for (Proposal proposal : proposals) {
                 HashMap<String, Object> response = new HashMap<>();
                 Users user = proposal.getUser();
+                response.put("proposalId", proposal.getProposalId());
                 response.put("tipo", customer.is_cnpj());
                 response.put("username", user.getUsername());
                 response.put("business", customer.getBusiness());
