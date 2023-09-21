@@ -31,5 +31,5 @@ public class BoracredApplication extends SpringBootServletInitializer {
 					.allowedMethods("GET", "POST", "PUT", "DELETE")
 					.allowedHeaders("*");
 		}
-
+	}
 }
