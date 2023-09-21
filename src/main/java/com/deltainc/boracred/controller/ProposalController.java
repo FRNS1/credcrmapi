@@ -332,6 +332,7 @@ public class ProposalController {
                     Customer customer = proposal.getCustomer();
                     if (!customer.is_cnpj() == true) {
                         try {
+                            System.out.println("enviando");
                             emailService.sendEmailAprovado("joao.fernandes@deltaux.com.br", customer.getNome_completo(), proposal.getProposalId(), proposal.getTaxa(), proposal.getValor_desejado());
                             System.out.println("email enviado");
                         } catch (Exception e){
@@ -339,6 +340,7 @@ public class ProposalController {
                         }
                     } else {
                         try {
+                            System.out.println("enviando");
                             emailService.sendEmailAprovado("joao.fernandes@deltaux.com.br", customer.getRazao_social(), proposal.getProposalId(), proposal.getTaxa(), proposal.getValor_desejado());
                             System.out.println("email enviado");
                         } catch (Exception e){
