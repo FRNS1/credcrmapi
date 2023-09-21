@@ -15,12 +15,22 @@ import com.deltainc.boracred.htmltemplates.EmailTemplates;
 @Service
 public class EmailService {
 
-    public void sendEmailAprovado(String to, String nomeCliente, Integer idProposta, Float taxa, Float valorDesejado, Integer prazo) throws Exception{
+    public void sendEmailAprovado(String to, String nomeCliente, Integer idProposta, Float taxa, Float valorLiberado, Integer prazo) throws Exception{
         String subject = String.format("O cliente %s, aceitou a proposta %d", nomeCliente, idProposta);
         String htmlContent = EmailTemplates.templateAprovado;
         htmlContent = htmlContent.replace("${nomeCliente}", nomeCliente);
         htmlContent = htmlContent.replace("${idProposta}", idProposta.toString());
         htmlContent = htmlContent.replace("${taxa}", taxa.toString());
+        htmlContent = htmlContent.replace("${valorLiberado}", valorLiberado.toString());
+        htmlContent = htmlContent.replace("${prazo}", prazo.toString());
+        sendHtmlEmail(to, subject, htmlContent);
+    }
+
+    public void sendEmailNovaProposta(String to, String nomeCliente, Integer idProposta, Float valorDesejado, Integer prazo) throws Exception{
+        String subject = String.format("Nova proposta do cliente %s.", nomeCliente, idProposta);
+        String htmlContent = EmailTemplates.templateAprovado;
+        htmlContent = htmlContent.replace("${nomeCliente}", nomeCliente);
+        htmlContent = htmlContent.replace("${idProposta}", idProposta.toString());
         htmlContent = htmlContent.replace("${valorLiberado}", valorDesejado.toString());
         htmlContent = htmlContent.replace("${prazo}", prazo.toString());
         sendHtmlEmail(to, subject, htmlContent);

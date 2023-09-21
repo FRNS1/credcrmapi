@@ -84,6 +84,30 @@ public class ProposalController {
             proposal.setObservacao_cliente(registerData.getObservacao_cliente());
             proposal.setData_abertura(LocalDate.now());
             proposal.setUser(user);
+            List<String> emailsTo = new ArrayList<>();
+            emailsTo.add("joao.fernandes@deltaux.com.br");
+            emailsTo.add("pedro.ricco@deltainvestor.com.br");
+            emailsTo.add(user.getEmail());
+            for (String to : emailsTo){
+                System.out.println(to);
+                if (customer.is_cnpj() != true) {
+                    try {
+                        System.out.println("enviando");
+                        emailService.sendEmailNovaProposta(to, customer.getNome_completo(), proposal.getProposalId(), proposal.getValor_desejado(), proposal.getPrazo());
+                        System.out.println("email enviado");
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                } else {
+                    try {
+                        System.out.println("enviando");
+                        emailService.sendEmailNovaProposta(to, customer.getRazao_social(), proposal.getProposalId(), proposal.getValor_desejado(), proposal.getPrazo());
+                        System.out.println("email enviado");
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                }
+            }
             proposalRepository.save(proposal);
             return new ResponseEntity<>("Created", HttpStatus.CREATED);
         }catch(Exception error){
@@ -336,14 +360,14 @@ public class ProposalController {
                     List<String> emailsTo = new ArrayList<>();
                     emailsTo.add("joao.fernandes@deltaux.com.br");
                     emailsTo.add("controladoria@deltaux.com.br");
-//                    emailsTo.add("pedro.ricco@deltainvestor.com.br");
-//                    emailsTo.add(user.getEmail());
+                    emailsTo.add("pedro.ricco@deltainvestor.com.br");
+                    emailsTo.add(user.getEmail());
                     for (String to : emailsTo) {
                         System.out.println(to);
                         if (customer.is_cnpj() != true) {
                             try {
                                 System.out.println("enviando");
-                                emailService.sendEmailAprovado(to, customer.getNome_completo(), proposal.getProposalId(), proposal.getTaxa(), proposal.getValor_desejado(), proposal.getPrazo());
+                                emailService.sendEmailAprovado(to, customer.getNome_completo(), proposal.getProposalId(), proposal.getTaxa(), proposal.getValor_liberado(), proposal.getPrazo());
                                 System.out.println("email enviado");
                             } catch (Exception e) {
                                 System.out.println(e);
@@ -351,7 +375,7 @@ public class ProposalController {
                         } else {
                             try {
                                 System.out.println("enviando");
-                                emailService.sendEmailAprovado(to, customer.getRazao_social(), proposal.getProposalId(), proposal.getTaxa(), proposal.getValor_desejado(), proposal.getPrazo());
+                                emailService.sendEmailAprovado(to, customer.getRazao_social(), proposal.getProposalId(), proposal.getTaxa(), proposal.getValor_liberado(), proposal.getPrazo());
                                 System.out.println("email enviado");
                             } catch (Exception e) {
                                 System.out.println(e);
