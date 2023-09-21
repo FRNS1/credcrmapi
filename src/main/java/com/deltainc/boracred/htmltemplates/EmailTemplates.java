@@ -415,7 +415,7 @@ public class EmailTemplates {
             "                                    <tr>\n" +
             "                                        <td class=\"v-container-padding-padding\" style=\"overflow-wrap:break-word;word-break:break-word;padding:100px 10px 10px;font-family:'Montserrat',sans-serif;\" align=\"left\">\n" +
             "\n" +
-            "                                            <h3 class=\"v-text-align v-line-height v-font-size\" style=\"margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-size: 18px;\"><strong>O cliente é o: ${nomeCliente}, Prazo: ${prazo}, Valor desejado: ${valorLiberado}, lembre-se que o cliente deve ter aceitado os termos e condições para seguirmos com a análise.</strong></h3>\n" +
+            "                                            <h3 class=\"v-text-align v-line-height v-font-size\" style=\"margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-size: 18px;\"><strong>O cliente é o: ${nomeCliente}, prazo: ${prazo}, valor desejado: ${valorLiberado}, lembre-se que o cliente deve ter aceitado os termos e condições para seguirmos com a análise.</strong></h3>\n" +
             "\n" +
             "                                        </td>\n" +
             "                                    </tr>\n" +
