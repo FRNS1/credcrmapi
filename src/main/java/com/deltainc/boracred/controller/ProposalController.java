@@ -328,10 +328,10 @@ public class ProposalController {
                 proposal.setMotivo_reprovacao(data.getMotivo_reprovacao());
                 proposal.setObservacao_cliente(data.getObservacao_cliente());
                 proposal.setObservacao_analista(data.getObservacao_analista());
-                if (data.getStatus() != "Aprovado"){
+                if (proposal.getStatus() == "Aprovado"){
                     System.out.println("aprovado");
                     Customer customer = proposal.getCustomer();
-                    if (!customer.is_cnpj() == true) {
+                    if (customer.is_cnpj() != true) {
                         try {
                             System.out.println("enviando");
                             emailService.sendEmailAprovado("joao.fernandes@deltaux.com.br", customer.getNome_completo(), proposal.getProposalId(), proposal.getTaxa(), proposal.getValor_desejado());
