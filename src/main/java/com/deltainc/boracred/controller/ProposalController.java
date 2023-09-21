@@ -328,7 +328,7 @@ public class ProposalController {
                 proposal.setMotivo_reprovacao(data.getMotivo_reprovacao());
                 proposal.setObservacao_cliente(data.getObservacao_cliente());
                 proposal.setObservacao_analista(data.getObservacao_analista());
-                if (data.getStatus() == "Aprovado"){
+                if (data.getStatus() != "Aprovado"){
                     System.out.println("aprovado");
                     Customer customer = proposal.getCustomer();
                     if (!customer.is_cnpj() == true) {
