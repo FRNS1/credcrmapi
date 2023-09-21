@@ -8,25 +8,14 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import com.deltainc.boracred.htmltemplates.EmailTemplates;
 
 @Service
 public class EmailService {
 
-    private String loadHtmlFile(String filePath) throws IOException {
-        try (InputStream inputStream = new ClassPathResource(filePath).getInputStream()) {
-            return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-        }
-    }
-
-    public void sendVerificationEmail(String to, String verificationCode) throws Exception{
-        String subject = "Código de verificação DeltaHub.";
-        String htmlContent = "<html><body><h1>Olá!</h1><p>Seu código de verificação do DeltaHub é: <strong>" + verificationCode + "</strong></p></body></html>";
-        sendHtmlEmail(to, subject, htmlContent);
-    }
-
-    public void sendEmailAprovado(String to, String nomeCliente, Integer idProposta, Float taxa, Float valorDesejado, Integer prazo) throws Exception{
+    public void sendEmailAprovado(List<String> to, String nomeCliente, Integer idProposta, Float taxa, Float valorDesejado, Integer prazo) throws Exception{
         String subject = String.format("O cliente %s, aceitou a proposta %d", nomeCliente, idProposta);
         String htmlContent = EmailTemplates.templateAprovado;
         htmlContent = htmlContent.replace("${nomeCliente}", nomeCliente);
@@ -34,7 +23,9 @@ public class EmailService {
         htmlContent = htmlContent.replace("${taxa}", taxa.toString());
         htmlContent = htmlContent.replace("${valorLiberado}", valorDesejado.toString());
         htmlContent = htmlContent.replace("${prazo}", prazo.toString());
-        sendHtmlEmail(to, subject, htmlContent);
+        for (String email : to) {
+            sendHtmlEmail(email, subject, htmlContent);
+        }
     }
 
     private void sendHtmlEmail(String to, String subject, String htmlContent) throws Exception {
