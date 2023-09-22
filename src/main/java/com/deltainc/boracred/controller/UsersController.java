@@ -86,7 +86,7 @@ public class UsersController {
         } catch (Exception error) {
             Map<String, Object> response = new HashMap<>();
             response.put("erro", error.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
