@@ -360,6 +360,7 @@ public class ProposalController {
                                     ", valor_liberado = " + proposal.getValor_liberado() + ", prazo = " + proposal.getPrazo() + ", data_abertura = " + proposal.getData_abertura() + ", data_primeira_parcela = " + proposal.getData_primeira_parcela() + ", total_juros = " + proposal.getTotal_juros() +
                                     ", status_contrato = " + proposal.getStatus_contrato() + ", motivo_reprovacao = " + proposal.getMotivo_reprovacao() + ", observacao_cliente = " + proposal.getObservacao_cliente() + ", observacao_analista = " + proposal.getObservacao_analista();
                     Integer target = proposal.getProposalId();
+                    String target_type = "proposal";
                     Logs log = new Logs();
                     log.setUser(userLog);
                     log.setAction(action);
@@ -367,6 +368,7 @@ public class ProposalController {
                     log.setNew_value(newValue);
                     log.setOld_value(oldValue);
                     log.setTarget(target);
+                    log.setTarget_type(target_type);
                     logsRepository.save(log);
                 } catch(Exception e){
                     System.out.println("erro " + e);

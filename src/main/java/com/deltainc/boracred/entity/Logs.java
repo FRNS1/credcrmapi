@@ -24,6 +24,9 @@ public class Logs {
     private Integer target;
 
     @Column
+    private String target_type;
+
+    @Column
     private LocalDateTime action_date;
 
     @Column
