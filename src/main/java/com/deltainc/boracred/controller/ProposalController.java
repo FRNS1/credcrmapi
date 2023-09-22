@@ -338,7 +338,9 @@ public class ProposalController {
 
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody ProposalUpdateDTO data){
+        System.out.println("Proposal update");
         try {
+            System.out.println("Trying to do stuff");
             Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
             Users userLog = optionalUser.get();
             Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal_id());
