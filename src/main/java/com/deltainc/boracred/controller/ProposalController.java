@@ -375,7 +375,7 @@ public class ProposalController {
                     log.setTarget(target);
                     logsRepository.save(log);
                 } catch(Exception e){
-                    System.out.println(e);
+                    System.out.println("erro " + e);
                 }
                 // fim Logs
                 proposal.setValor_desejado(data.getValor_desejado());
