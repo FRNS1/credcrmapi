@@ -340,7 +340,7 @@ public class ProposalController {
     public ResponseEntity update(@RequestBody ProposalUpdateDTO data){
         try {
             Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
-            Users user = optionalUser.get();
+            Users userLog = optionalUser.get();
             Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal_id());
             if (optionalProposal.isPresent()){
                 Proposal proposal = optionalProposal.get();
@@ -361,7 +361,7 @@ public class ProposalController {
                         proposal.getStatus_contrato(), proposal.getMotivo_reprovacao(), proposal.getObservacao_cliente(), proposal.getObservacao_analista());
                 Integer target = proposal.getProposalId();
                 Logs log = new Logs();
-                log.setUser(user);
+                log.setUser(userLog);
                 log.setAction(action);
                 log.setAction_date(dataAcao);
                 log.setNew_value(newValue);
