@@ -67,14 +67,22 @@ public class UsersController {
     public ResponseEntity login(@RequestBody LoginDTO loginData){
         try {
             userDetailsService.verifyUserCredentials(loginData);
+            System.out.println("Verifiquei o usuário");
             String token = jwtService.generateToken(loginData.getUsername());
+            System.out.println("Gerando o token " + token);
             TokenDTO tokenDTO = new TokenDTO();
             tokenDTO.setToken(token);
+            System.out.println("Token setado");
             Users user = usersRepository.findByUsername(loginData.getUsername());
+            System.out.println("achei o usuario" + user);
             String nomeUser = user.getNome();
+            System.out.println("nome" + nomeUser);
             String email = user.getEmail();
+            System.out.println("email" + email);
             Integer userId = user.getUser_id();
+            System.out.println("id" + userId);
             Grupos userGroup = user.getGrupo_id();
+            System.out.println("grupo" + userGroup);
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
             response.put("nome", nomeUser);
@@ -82,11 +90,12 @@ public class UsersController {
             response.put("email", email);
             response.put("userid", userId);
             response.put("usergroup", userGroup.getNome_grupo());
+            System.out.println("Enviando resposta");
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception error) {
             Map<String, Object> response = new HashMap<>();
             response.put("erro", error.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
