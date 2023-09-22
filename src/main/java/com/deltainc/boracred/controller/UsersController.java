@@ -66,6 +66,7 @@ public class UsersController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginDTO loginData){
         try {
+            System.out.println("Começando");
             userDetailsService.verifyUserCredentials(loginData);
             System.out.println("Verifiquei o usuário");
             String token = jwtService.generateToken(loginData.getUsername());
