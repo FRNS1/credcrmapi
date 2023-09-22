@@ -353,18 +353,12 @@ public class ProposalController {
                 try {
                     String action = "Update";
                     LocalDateTime dataAcao = LocalDateTime.now();
-                    String newValue = String.format("valor_desejado = %.2f, taxa = %.2f, corban = %.2f, status = %s, montante = %.2f, ",
-                            data.getValor_desejado(), data.getTaxa(), data.getCorban(), data.getStatus(), data.getMontante() +
-                                    "valor_liberado = %.2f, prazo = %d, data_abertura = %s, data_primeira_parcela = %s, total_juros = %.2f,",
-                            data.getValor_liberado(), data.getPrazo(), data.getData_abertura(), data.getData_primeira_parcela(), data.getTotal_juros() +
-                                    "status_contrato = %s, motivo_reprovacao = %s, observacao_cliente = %s, observacao_analista = %s",
-                            data.getStatus_contrato(), data.getMotivo_reprovacao(), data.getObservacao_cliente(), data.getObservacao_analista());
-                    String oldValue = String.format("valor_desejado = %.2f, taxa = %.2f, corban = %.2f, status = %s, montante = %.2f, ",
-                            proposal.getValor_desejado(), proposal.getTaxa(), proposal.getCorban(), proposal.getStatus(), proposal.getMontante() +
-                                    "valor_liberado = %.2f, prazo = %d, data_abertura = %s, data_primeira_parcela = %s, total_juros = %.2f,",
-                            proposal.getValor_liberado(), proposal.getPrazo(), proposal.getData_abertura(), proposal.getData_primeira_parcela(), proposal.getTotal_juros() +
-                                    "status_contrato = %s, motivo_reprovacao = %s, observacao_cliente = %s, observacao_analista = %s",
-                            proposal.getStatus_contrato(), proposal.getMotivo_reprovacao(), proposal.getObservacao_cliente(), proposal.getObservacao_analista());
+                    String newValue = "valor_desejado = " + data.getValor_desejado() + ", taxa = " + data.getTaxa() + ", corban = " + data.getCorban() + ", status = " + data.getStatus() + ", montante = " + data.getMontante() +
+                                    ", valor_liberado = " + data.getValor_liberado() + ", prazo = " + data.getPrazo() + ", data_abertura = " + data.getData_abertura() + ", data_primeira_parcela = " + data.getData_primeira_parcela() + ", total_juros = " + data.getTotal_juros() +
+                                    ", status_contrato = " + data.getStatus_contrato() + ", motivo_reprovacao = " + data.getMotivo_reprovacao() + ", observacao_cliente = " + data.getObservacao_cliente() + ", observacao_analista = " + data.getObservacao_analista();
+                    String oldValue = "valor_desejado = " + proposal.getValor_desejado() + ", taxa = " + proposal.getTaxa() + ", corban = " + proposal.getCorban() + ", status = " + proposal.getStatus() + ", montante = " + proposal.getMontante() +
+                                    ", valor_liberado = " + proposal.getValor_liberado() + ", prazo = " + proposal.getPrazo() + ", data_abertura = " + proposal.getData_abertura() + ", data_primeira_parcela = " + proposal.getData_primeira_parcela() + ", total_juros = " + proposal.getTotal_juros() +
+                                    ", status_contrato = " + proposal.getStatus_contrato() + ", motivo_reprovacao = " + proposal.getMotivo_reprovacao() + ", observacao_cliente = " + proposal.getObservacao_cliente() + ", observacao_analista = " + proposal.getObservacao_analista();
                     Integer target = proposal.getProposalId();
                     Logs log = new Logs();
                     log.setUser(userLog);
