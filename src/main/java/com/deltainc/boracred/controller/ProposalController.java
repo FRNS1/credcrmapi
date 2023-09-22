@@ -341,6 +341,7 @@ public class ProposalController {
         System.out.println("Proposal update");
         try {
             System.out.println("Trying to do stuff");
+            System.out.println(data.getUser_id());
             Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
             System.out.println("Consegui o optional");
             Users userLog = optionalUser.get();
