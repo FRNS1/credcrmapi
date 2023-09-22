@@ -15,6 +15,8 @@ public class ProposalUpdateDTO {
 
     private Integer proposal_id;
 
+    private Integer user_id;
+
     private float valor_desejado;
 
     private float taxa;

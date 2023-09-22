@@ -36,6 +36,12 @@ public class Users {
     @Column
     private String setor;
 
+    @Column
+    private boolean indicador;
+
+    @Column
+    private String codigo_indicador;
+
     @ManyToOne
     @JoinColumn(name = "grupos.grupo_id")
     private Grupos grupo_id;
