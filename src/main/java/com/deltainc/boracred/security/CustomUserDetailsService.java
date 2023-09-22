@@ -19,15 +19,20 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         Users user = userService.getByUsername(username);
         if (user == null){
+            System.out.println("User not found");
             throw new UsernameNotFoundException("\"User not found\"");
         }
         return UserPrincipal.create(user);
     }
 
     public void verifyUserCredentials(LoginDTO login){
+        System.out.println("Passei aqui 0");
         UserDetails user = loadUserByUsername(login.getUsername());
+        System.out.println("Passei aqui 1");
         boolean passwordIsTheSame = SecurityConfig.passwordEncoder().matches(login.getPassword(), user.getPassword());
+        System.out.println("Passei aqui 2");
         if (!passwordIsTheSame){
+            System.out.println("Bad Password");
             throw new BadPasswordException("\"Bad password\"");
         }
     }
