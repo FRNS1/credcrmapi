@@ -343,6 +343,7 @@ public class ProposalController {
             System.out.println("Trying to do stuff");
             Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
             Users userLog = optionalUser.get();
+            System.out.println(userLog);
             Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal_id());
             if (optionalProposal.isPresent()){
                 Proposal proposal = optionalProposal.get();
