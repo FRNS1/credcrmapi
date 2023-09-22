@@ -345,29 +345,33 @@ public class ProposalController {
             if (optionalProposal.isPresent()){
                 Proposal proposal = optionalProposal.get();
                 // Logs
-                String action = "Update";
-                LocalDateTime dataAcao = LocalDateTime.now();
-                String newValue = String.format("valor_desejado = %.2f, taxa = %.2f, corban = %.2f, status = %s, montante = %.2f, ",
-                        data.getValor_desejado(), data.getTaxa(), data.getCorban(), data.getStatus(), data.getMontante() +
-                        "valor_liberado = %.2f, prazo = %d, data_abertura = %s, data_primeira_parcela = %s, total_juros = %.2f,",
-                        data.getValor_liberado(), data.getPrazo(), data.getData_abertura(), data.getData_primeira_parcela(), data.getTotal_juros() +
-                        "status_contrato = %s, motivo_reprovacao = %s, observacao_cliente = %s, observacao_analista = %s",
-                        data.getStatus_contrato(), data.getMotivo_reprovacao(), data.getObservacao_cliente(), data.getObservacao_analista());
-                String oldValue = String.format("valor_desejado = %.2f, taxa = %.2f, corban = %.2f, status = %s, montante = %.2f, ",
-                        proposal.getValor_desejado(), proposal.getTaxa(), proposal.getCorban(), proposal.getStatus(), proposal.getMontante() +
-                                "valor_liberado = %.2f, prazo = %d, data_abertura = %s, data_primeira_parcela = %s, total_juros = %.2f,",
-                        proposal.getValor_liberado(), proposal.getPrazo(), proposal.getData_abertura(), proposal.getData_primeira_parcela(), proposal.getTotal_juros() +
-                                "status_contrato = %s, motivo_reprovacao = %s, observacao_cliente = %s, observacao_analista = %s",
-                        proposal.getStatus_contrato(), proposal.getMotivo_reprovacao(), proposal.getObservacao_cliente(), proposal.getObservacao_analista());
-                Integer target = proposal.getProposalId();
-                Logs log = new Logs();
-                log.setUser(userLog);
-                log.setAction(action);
-                log.setAction_date(dataAcao);
-                log.setNew_value(newValue);
-                log.setOld_value(oldValue);
-                log.setTarget(target);
-                logsRepository.save(log);
+                try {
+                    String action = "Update";
+                    LocalDateTime dataAcao = LocalDateTime.now();
+                    String newValue = String.format("valor_desejado = %.2f, taxa = %.2f, corban = %.2f, status = %s, montante = %.2f, ",
+                            data.getValor_desejado(), data.getTaxa(), data.getCorban(), data.getStatus(), data.getMontante() +
+                                    "valor_liberado = %.2f, prazo = %d, data_abertura = %s, data_primeira_parcela = %s, total_juros = %.2f,",
+                            data.getValor_liberado(), data.getPrazo(), data.getData_abertura(), data.getData_primeira_parcela(), data.getTotal_juros() +
+                                    "status_contrato = %s, motivo_reprovacao = %s, observacao_cliente = %s, observacao_analista = %s",
+                            data.getStatus_contrato(), data.getMotivo_reprovacao(), data.getObservacao_cliente(), data.getObservacao_analista());
+                    String oldValue = String.format("valor_desejado = %.2f, taxa = %.2f, corban = %.2f, status = %s, montante = %.2f, ",
+                            proposal.getValor_desejado(), proposal.getTaxa(), proposal.getCorban(), proposal.getStatus(), proposal.getMontante() +
+                                    "valor_liberado = %.2f, prazo = %d, data_abertura = %s, data_primeira_parcela = %s, total_juros = %.2f,",
+                            proposal.getValor_liberado(), proposal.getPrazo(), proposal.getData_abertura(), proposal.getData_primeira_parcela(), proposal.getTotal_juros() +
+                                    "status_contrato = %s, motivo_reprovacao = %s, observacao_cliente = %s, observacao_analista = %s",
+                            proposal.getStatus_contrato(), proposal.getMotivo_reprovacao(), proposal.getObservacao_cliente(), proposal.getObservacao_analista());
+                    Integer target = proposal.getProposalId();
+                    Logs log = new Logs();
+                    log.setUser(userLog);
+                    log.setAction(action);
+                    log.setAction_date(dataAcao);
+                    log.setNew_value(newValue);
+                    log.setOld_value(oldValue);
+                    log.setTarget(target);
+                    logsRepository.save(log);
+                } catch(Exception e){
+                    System.out.println(e);
+                }
                 // fim Logs
                 proposal.setValor_desejado(data.getValor_desejado());
                 proposal.setTaxa(data.getTaxa());
