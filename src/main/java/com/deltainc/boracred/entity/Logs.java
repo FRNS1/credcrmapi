@@ -29,10 +29,10 @@ public class Logs {
     @Column
     private String action;
 
-    @Column
+    @Column(length = 100000)
     private String old_value;
 
-    @Column
+    @Column(length = 100000)
     private String new_value;
 
 }
