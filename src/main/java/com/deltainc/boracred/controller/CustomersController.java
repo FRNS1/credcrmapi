@@ -103,6 +103,19 @@ public class CustomersController {
                 newAddress.setEstado(csDataReg.getEstado());
                 newAddress.setPais(csDataReg.getPais());
                 addressRepository.save(newAddress);
+                // Logs
+                String action = "Register";
+                LocalDateTime dataAcao = LocalDateTime.now();
+                Integer target = newCustomer.getCustomer_id();
+                String target_type = "Customer";
+                Logs log = new Logs();
+                log.setUser(users);
+                log.setAction(action);
+                log.setAction_date(dataAcao);
+                log.setTarget(target);
+                log.setTarget_type(target_type);
+                logsRepository.save(log);
+                // Fim Logs
                 return new ResponseEntity<>("Created", HttpStatus.CREATED);
             }
         }catch (Exception error){
