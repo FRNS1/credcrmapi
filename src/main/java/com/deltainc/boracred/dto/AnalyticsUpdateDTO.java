@@ -11,6 +11,8 @@ public class AnalyticsUpdateDTO {
 
     private Integer proposalId;
 
+    private Integer user_id;
+
     private Integer numTitulosProtestados;
 
     private Integer score;

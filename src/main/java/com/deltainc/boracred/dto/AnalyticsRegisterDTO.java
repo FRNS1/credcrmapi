@@ -11,6 +11,8 @@ public class AnalyticsRegisterDTO {
 
     private int proposal;
 
+    private Integer user_id;
+
     private int customer;
 
     private int num_titulos_protestados;
