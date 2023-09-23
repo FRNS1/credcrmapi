@@ -11,6 +11,8 @@ public class AllsDataUpdateDTO {
 
     private Integer proposal_id;
 
+    private Integer user_id;
+
     private Integer num_pendencias_financeiras;
 
     private Float valor_pendencias_financeiras;
