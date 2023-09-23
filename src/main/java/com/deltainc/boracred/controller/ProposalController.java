@@ -113,6 +113,16 @@ public class ProposalController {
                     }
                 }
             }
+            String action = "Register";
+            LocalDateTime dataAcao = LocalDateTime.now();
+            String target_type = "proposal";
+            Logs log = new Logs();
+            log.setAction(action);
+            log.setAction_date(dataAcao);
+            log.setTarget(proposal.getProposalId());
+            log.setUser(user);
+            log.setTarget_type(target_type);
+            logsRepository.save(log);
             return new ResponseEntity<>("Created", HttpStatus.CREATED);
         }catch(Exception error){
             Map<String, Object> response = new HashMap<>();
