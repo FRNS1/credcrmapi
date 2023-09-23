@@ -23,7 +23,7 @@ public class IndicacaoPfDTO {
 
     private float valorDesejado;
 
-    private Integer prazo;
+    private int prazo;
 
     private String codigo_indicador;
 
