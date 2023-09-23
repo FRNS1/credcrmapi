@@ -1,6 +1,7 @@
 package com.deltainc.boracred.controller;
 
 import com.amazonaws.Response;
+import com.deltainc.boracred.dto.GeoLocation;
 import com.deltainc.boracred.dto.IndicacaoPfDTO;
 import com.deltainc.boracred.dto.IndicacaoPjDTO;
 import com.deltainc.boracred.entity.*;
@@ -17,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 
 @Controller
-@RequestMapping("api/v1/self")
+@RequestMapping("api/v1/business")
 public class SelfServiceController {
 
     @Autowired
@@ -41,8 +42,9 @@ public class SelfServiceController {
             String ip = request.getRemoteAddr();
             String uri = "http://ip-api.com/json/" + ip;
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(uri, String.class);
-            System.out.println(result);
+            GeoLocation geoLocation = restTemplate.getForObject(uri, GeoLocation.class);
+            System.out.println(geoLocation);
+            String finalLocation = geoLocation.getLatitude() + " " + geoLocation.getLongitude();
             Customer customer = new Customer();
             Contacts contact = new Contacts();
             Proposal proposal = new Proposal();
@@ -63,7 +65,7 @@ public class SelfServiceController {
             aceiteScr.setProposal_id(proposal);
             aceiteScr.setDispositivo("Navegador Web");
             aceiteScr.setData_hora(LocalDateTime.now());
-            aceiteScr.setGeolocalizacao(result);
+            aceiteScr.setGeolocalizacao(finalLocation);
             aceiteScr.setIp_publico_usuario(ip);
             aceiteScrRepository.save(aceiteScr);
             return new ResponseEntity("Created", HttpStatus.OK);
