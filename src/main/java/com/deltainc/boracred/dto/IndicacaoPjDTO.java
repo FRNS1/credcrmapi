@@ -23,6 +23,8 @@ public class IndicacaoPjDTO {
 
     private String email;
 
+    private String telefone;
+
     private Float receitaMedia;
 
     private Float valorDesejado;
@@ -30,5 +32,7 @@ public class IndicacaoPjDTO {
     private Integer prazo;
 
     private String geolocalizacao;
+
+    private String codigo_indicador;
 
 }

@@ -15,6 +15,8 @@ public class IndicacaoPfDTO {
 
     private String email;
 
+    private String telefone;
+
     private String profissao;
 
     private Float rendaMedia;
@@ -23,6 +25,6 @@ public class IndicacaoPfDTO {
 
     private Integer prazo;
 
-    private String geolocalizacao;
+    private String codigo_indicador;
 
 }

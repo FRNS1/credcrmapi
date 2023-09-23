@@ -57,6 +57,9 @@ public class Proposal {
     private float total_juros;
 
     @Column
+    private float renda_media;
+
+    @Column
     private String status_contrato;
 
     @Column
