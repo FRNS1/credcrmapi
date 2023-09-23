@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .requestMatchers(HttpMethod.POST, "/api/v1/users/register").permitAll()
                 .requestMatchers(HttpMethod.POST, "api/v1/users/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "api/v1/self/formwebindicacaopf").permitAll()
+                .requestMatchers(HttpMethod.POST, "api/v1/business/formwebindicacaopf").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
