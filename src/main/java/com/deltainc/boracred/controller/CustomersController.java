@@ -70,7 +70,7 @@ public class CustomersController {
                 String action = "Register";
                 LocalDateTime dataAcao = LocalDateTime.now();
                 Integer target = newCustomer.getCustomer_id();
-                String target_type = "Customer";
+                String target_type = "Customer CNPJ";
                 Logs log = new Logs();
                 log.setUser(users);
                 log.setAction(action);
@@ -107,7 +107,7 @@ public class CustomersController {
                 String action = "Register";
                 LocalDateTime dataAcao = LocalDateTime.now();
                 Integer target = newCustomer.getCustomer_id();
-                String target_type = "Customer";
+                String target_type = "Customer PF";
                 Logs log = new Logs();
                 log.setUser(users);
                 log.setAction(action);

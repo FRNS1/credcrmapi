@@ -1,11 +1,11 @@
 package com.deltainc.boracred.controller;
 
 import com.deltainc.boracred.dto.FilesUploadDTO;
-import com.deltainc.boracred.entity.Files;
-import com.deltainc.boracred.entity.Proposal;
-import com.deltainc.boracred.entity.retrieveFileNameFromUploadService;
+import com.deltainc.boracred.entity.*;
 import com.deltainc.boracred.repositories.FilesRepository;
+import com.deltainc.boracred.repositories.LogsRepository;
 import com.deltainc.boracred.repositories.ProposalRepository;
+import com.deltainc.boracred.repositories.UsersRepository;
 import com.deltainc.boracred.services.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
@@ -26,6 +27,12 @@ public class FilesController {
 
     @Autowired
     FilesRepository filesRepository;
+
+    @Autowired
+    UsersRepository usersRepository;
+
+    @Autowired
+    LogsRepository logsRepository;
 
     retrieveFileNameFromUploadService fileNameWithMLGeneral = new retrieveFileNameFromUploadService();
 
@@ -43,12 +50,27 @@ public class FilesController {
         String fileName = fileNameWithMLGeneral.getFileName().replace(" ", "+");
         Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal());
         Proposal proposal = optionalProposal.get();
+        Optional<Users> optionalUsers = usersRepository.findById(data.getUser_id());
+        Users users = optionalUsers.get();
         Files newFile = new Files();
         newFile.setProposal(proposal);
         newFile.setTipo_arquivo(data.getTipoArquivo());
         newFile.setFile_name(data.getFilaName());
         newFile.setUrl_arquivo("https://docsbora.s3.amazonaws.com/" + fileName);
         filesRepository.save(newFile);
+        // LOGS
+        String action = "Register";
+        LocalDateTime dataAcao = LocalDateTime.now();
+        Integer target = newFile.getFiles_id();
+        String target_type = "Files";
+        Logs log = new Logs();
+        log.setUser(users);
+        log.setAction(action);
+        log.setAction_date(dataAcao);
+        log.setTarget(target);
+        log.setTarget_type(target_type);
+        logsRepository.save(log);
+        // FIM LOGS
         return new ResponseEntity<>("Created", HttpStatus.CREATED);
     }
 
