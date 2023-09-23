@@ -25,9 +25,9 @@ public class IndicacaoPjDTO {
 
     private String telefone;
 
-    private float receitaMedia;
+    private Float receitaMedia;
 
-    private float valorDesejado;
+    private Float valorDesejado;
 
     private Integer prazo;
 
