@@ -19,9 +19,9 @@ public class IndicacaoPfDTO {
 
     private String profissao;
 
-    private Float rendaMedia;
+    private float rendaMedia;
 
-    private Float valorDesejado;
+    private float valorDesejado;
 
     private Integer prazo;
 
