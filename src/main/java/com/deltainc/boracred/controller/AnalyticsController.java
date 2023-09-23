@@ -66,7 +66,7 @@ public class AnalyticsController {
         // LOGS
         String action = "Update";
         LocalDateTime dataAcao = LocalDateTime.now();
-        Integer target = analytics.getSearch_id();
+        Integer target = analytics.getAnalytics_id();
         String target_type = "Analytics";
         Logs log = new Logs();
         log.setUser(users);
@@ -97,7 +97,7 @@ public class AnalyticsController {
                 String oldValue = "num_titulos_protestados = " + analytics.getNum_titulos_protestados() + ", score = " + analytics.getScore() + ", num_refins = " + analytics.getNum_refins() + ", valor_cadins = " + analytics.getValor_cadins() + ", valor_iss = " + analytics.getValor_iss() +
                         ", num_processos = " + analytics.getNum_processos() + ", num_uf_processos = " + analytics.getNum_uf_processos() + ", divida_ativa = " + analytics.getDivida_ativa() + ", valor_titulos_protestados = " + analytics.getValor_titulos_protestados() + ", risco = " + analytics.getRisco() +
                         ", is_pep = " + analytics.isPep() + ", num_cheques_devolvidos = " + analytics.getNum_cheques_devolvidos() + ", valor_cheques_devolvidos = " + analytics.getValor_cheques_devolvidos() + ", valor_pefins = " + analytics.getValor_pefins() + ", num_pefins = " + analytics.getNum_pefins() + ", empresas_nao-informadas = " + analytics.getEmpresas_nao_informadas();
-                Integer target = analytics.getSearch_id();
+                Integer target = analytics.getAnalytics_id();
                 String target_type = "Analytics";
                 Logs log = new Logs();
                 log.setUser(users);

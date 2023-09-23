@@ -18,10 +18,6 @@ public class Analytics {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer analytics_id;
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer search_id;
-
     @ManyToOne
     @JoinColumn(name = "proposal.proposal_id")
     private Proposal proposal;
