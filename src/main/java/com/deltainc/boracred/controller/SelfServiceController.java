@@ -104,7 +104,6 @@ public class SelfServiceController {
             aceiteScr.setProposal_id(proposal);
             aceiteScr.setDispositivo("Navegador Web");
             aceiteScr.setData_hora(LocalDateTime.now());
-            aceiteScr.setGeolocalizacao(data.getGeolocalizacao());
             aceiteScr.setIp_publico_usuario(request.getRemoteAddr());
             aceiteScrRepository.save(aceiteScr);
             return new ResponseEntity("\"Created\"", HttpStatus.OK);
