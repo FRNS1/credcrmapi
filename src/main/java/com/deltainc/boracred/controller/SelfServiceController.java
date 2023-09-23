@@ -44,6 +44,7 @@ public class SelfServiceController {
             RestTemplate restTemplate = new RestTemplate();
             GeoLocation geoLocation = restTemplate.getForObject(uri, GeoLocation.class);
             System.out.println(geoLocation);
+            System.out.println(data.getRendaMedia());
             String finalLocation = geoLocation.getLatitude() + " " + geoLocation.getLongitude();
             Customer customer = new Customer();
             Contacts contact = new Contacts();
