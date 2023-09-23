@@ -13,6 +13,8 @@ public class CustomerRegisterDTO {
 
     private String is_cnpj;
 
+    private Integer user_id;
+
     private String nome_completo;
 
     private String nome_fantasia;

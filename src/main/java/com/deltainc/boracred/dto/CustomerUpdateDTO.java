@@ -13,6 +13,8 @@ public class CustomerUpdateDTO {
 
     private Integer customer_id;
 
+    private Integer user_id;
+
     private String nome_completo;
 
     private String nome_fantasia;

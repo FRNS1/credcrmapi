@@ -32,7 +32,6 @@ public class AnalyticsController {
     @Autowired
     UsersRepository usersRepository;
 
-
     @Autowired
     LogsRepository logsRepository;
 
@@ -64,7 +63,7 @@ public class AnalyticsController {
         analytics.setEmpresas_nao_informadas(data.getEmpresas_nao_informadas());
         analyticsRepository.save(analytics);
         // LOGS
-        String action = "Update";
+        String action = "Register";
         LocalDateTime dataAcao = LocalDateTime.now();
         Integer target = analytics.getAnalytics_id();
         String target_type = "Analytics";
