@@ -3,20 +3,15 @@ package com.deltainc.boracred.controller;
 import com.deltainc.boracred.dto.CustomerRegisterDTO;
 import com.deltainc.boracred.dto.CustomerUpdateDTO;
 import com.deltainc.boracred.dto.GetDataDTO;
-import com.deltainc.boracred.entity.Address;
-import com.deltainc.boracred.entity.Contacts;
-import com.deltainc.boracred.entity.Customer;
-import com.deltainc.boracred.entity.Users;
-import com.deltainc.boracred.repositories.AddressRepository;
-import com.deltainc.boracred.repositories.ContactsRepository;
-import com.deltainc.boracred.repositories.CustomerRepository;
-import com.deltainc.boracred.repositories.UsersRepository;
+import com.deltainc.boracred.entity.*;
+import com.deltainc.boracred.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -35,6 +30,9 @@ public class CustomersController {
     @Autowired
     UsersRepository usersRepository;
 
+    @Autowired
+    LogsRepository logsRepository;
+
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody CustomerRegisterDTO csDataReg){
         try{
@@ -43,6 +41,8 @@ public class CustomersController {
             Contacts newContact = new Contacts();
             Optional<Users> OptionalUser = usersRepository.findById(csDataReg.getCreated_by());
             Users createdBy = OptionalUser.get();
+            Optional<Users> optionalUsers = usersRepository.findById(csDataReg.getUser_id());
+            Users users = optionalUsers.get();
             System.out.println(csDataReg);
             if ("true".equals(csDataReg.getIs_cnpj())) {
                 newCustomer.set_cnpj(true);
@@ -66,6 +66,19 @@ public class CustomersController {
                 newAddress.setEstado(csDataReg.getEstado());
                 newAddress.setPais(csDataReg.getPais());
                 addressRepository.save(newAddress);
+                // Logs
+                String action = "Register";
+                LocalDateTime dataAcao = LocalDateTime.now();
+                Integer target = newCustomer.getCustomer_id();
+                String target_type = "Customer CNPJ";
+                Logs log = new Logs();
+                log.setUser(users);
+                log.setAction(action);
+                log.setAction_date(dataAcao);
+                log.setTarget(target);
+                log.setTarget_type(target_type);
+                logsRepository.save(log);
+                // Fim Logs
                 return new ResponseEntity<>("Created", HttpStatus.CREATED);
             }else {
                 newCustomer.set_cnpj(false);
@@ -90,6 +103,19 @@ public class CustomersController {
                 newAddress.setEstado(csDataReg.getEstado());
                 newAddress.setPais(csDataReg.getPais());
                 addressRepository.save(newAddress);
+                // Logs
+                String action = "Register";
+                LocalDateTime dataAcao = LocalDateTime.now();
+                Integer target = newCustomer.getCustomer_id();
+                String target_type = "Customer PF";
+                Logs log = new Logs();
+                log.setUser(users);
+                log.setAction(action);
+                log.setAction_date(dataAcao);
+                log.setTarget(target);
+                log.setTarget_type(target_type);
+                logsRepository.save(log);
+                // Fim Logs
                 return new ResponseEntity<>("Created", HttpStatus.CREATED);
             }
         }catch (Exception error){

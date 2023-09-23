@@ -14,6 +14,8 @@ public class FilesUploadDTO {
 
     private String tipoArquivo;
 
+    private Integer user_id;
+
     private Integer proposal;
 
     private String url;
