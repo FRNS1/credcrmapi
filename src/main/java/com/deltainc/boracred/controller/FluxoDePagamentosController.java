@@ -63,7 +63,9 @@ public class FluxoDePagamentosController {
     @GetMapping("/getloans")
     public ResponseEntity getLoans(){
         try {
+            System.out.println("Getting list of contracts");
             List<Proposal> loans = proposalRepository.getAllLoans();
+            System.out.println("Got list of contracts");
             List<Map<String, Object>> listLoans = new ArrayList<>();
             for (Proposal proposal : loans){
                 Map<String, Object> response = new HashMap<>();
@@ -76,7 +78,9 @@ public class FluxoDePagamentosController {
                 int parcelasAtrasadas = 0;
                 boolean atrasado = false;
                 float totalAtrasado = 0;
+                System.out.println("Getting lines for proposal: " + proposal.getProposalId());
                 List<FluxoDePagamentos> payments = fluxoDePagamentosRepository.findAllByProposal(proposal.getProposalId());
+                System.out.println("Got lines for proposal: " + proposal.getProposalId());
                 for (FluxoDePagamentos payment : payments){
                     if ("VIGENTE".equals(payment.getPago())){
                         System.out.println("Vigente");
