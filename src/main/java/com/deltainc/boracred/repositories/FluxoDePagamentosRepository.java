@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface FluxoDePagamentosRepository extends JpaRepository<FluxoDePagamentos, Integer> {
 
-    @Query(value = "SELECT * FROM fluxo_pagamentos WHERE proposal_proposal_id = :proposal_id order by vencimento asc", nativeQuery = true)
+    @Query(value = "SELECT * FROM fluxo_de_pagamentos WHERE proposal_proposal_id = :proposal_id order by vencimento asc", nativeQuery = true)
     List<FluxoDePagamentos> findAllByProposal(@Param("proposal_id") Integer proposal_id);
 
 

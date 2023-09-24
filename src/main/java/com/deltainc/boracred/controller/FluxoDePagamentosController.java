@@ -82,22 +82,27 @@ public class FluxoDePagamentosController {
                 List<FluxoDePagamentos> payments = fluxoDePagamentosRepository.findAllByProposal(proposal.getProposalId());
                 System.out.println("Got lines for proposal: " + proposal.getProposalId());
                 for (FluxoDePagamentos payment : payments){
+                    System.out.println("Verificando pagamento da parcela: " + payment.getParcela_id());
                     if ("VIGENTE".equals(payment.getPago())){
-                        System.out.println("Vigente");
+                        System.out.println("Parcela " + payment.getParcela_id() + " Vigente");
                         saldoDevedor = payment.getSaldo_devedor();
                         break;
                     } else if ("EM ATRASO".equals(payment.getPago())){
+                        System.out.println("Parcela " + payment.getParcela_id() + " em atraso");
                         saldoDevedor = payment.getSaldo_devedor();
                         break;
                     }
                 }
                 for (FluxoDePagamentos payment2 : payments){
+                    System.out.println("Calculando receita esperada");
                     receitaEsperada = receitaEsperada + payment2.getJuros();
                     if ("PAGO".equals(payment2.getPago())){
+                        System.out.println("Parcela paga");
                         amortizacaoPaga = amortizacaoPaga + payment2.getAmortizacao();
                         jurosPagos = jurosPagos + payment2.getJuros();
                         parcelasPagas = parcelasPagas + 1;
                     } else if ("EM ATRASO".equals(payment2.getPago())){
+                        System.out.println("Parcela em atraso");
                         parcelasAtrasadas = parcelasAtrasadas + 1;
                         atrasado = true;
                         totalAtrasado = totalAtrasado + payment2.getPagamento();
