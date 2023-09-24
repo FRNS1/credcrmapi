@@ -89,7 +89,7 @@ public class SelfServiceController {
     }
 
     @PostMapping("/formwebindicacaopj")
-    public ResponseEntity formWebPj(IndicacaoPjDTO data, HttpServletRequest request){
+    public ResponseEntity formWebPj(@RequestBody IndicacaoPjDTO data, HttpServletRequest request){
         try{
             String ip = request.getRemoteAddr();
             String uri = "http://ip-api.com/json/" + ip;
