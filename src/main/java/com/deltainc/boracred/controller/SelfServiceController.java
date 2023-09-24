@@ -132,6 +132,10 @@ public class SelfServiceController {
             aceiteScr.setIp_publico_usuario(ip);
             aceiteScr.setGeolocalizacao(finalLocation);
             aceiteScrRepository.save(aceiteScr);
+            socioPj.setCustomer(customer);
+            socioPj.setNome_socio(data.getNomeSocio());
+            socioPj.setCpf_socio(data.getCpfSocio());
+            socioPjRepository.save(socioPj);
             return new ResponseEntity("\"Created\"", HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
