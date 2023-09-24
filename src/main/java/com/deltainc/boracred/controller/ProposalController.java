@@ -61,6 +61,7 @@ public class ProposalController {
             if (optionalProposal.isPresent()){
                 Proposal proposal = optionalProposal.get();
                 Contacts contact = contactsRepository.findByCustomer(proposal.getCustomer());
+                response.put("customer", proposal.getCustomer());
                 response.put("proposal", proposal);
                 response.put("contact", contact);
             }
