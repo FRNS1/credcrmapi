@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -32,5 +34,7 @@ public class IndicacaoPjDTO {
     private Integer prazo;
 
     private Integer codigo_indicador;
+
+    private LocalDate data_abertura;
 
 }

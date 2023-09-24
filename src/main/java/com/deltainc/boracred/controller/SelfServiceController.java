@@ -75,6 +75,7 @@ public class SelfServiceController {
             proposal.setValor_desejado(data.getValorDesejado());
             proposal.setPrazo(data.getPrazo());
             proposal.setUser(user);
+            proposal.setStatus("Em análise");
             proposalRepository.save(proposal);
             aceiteScr.setProposal_id(proposal);
             aceiteScr.setDispositivo("Navegador Web");
@@ -112,6 +113,7 @@ public class SelfServiceController {
             customer.setSegmento(data.getSegmento());
             customer.setCreated_by(user);
             customer.setBusiness(grupo.getNome_grupo());
+            customer.setData_abertura(data.getData_abertura());
             customerRepository.save(customer);
             socioPj.setCustomer(customer);
             socioPj.setCpf_socio(data.getCpfSocio());
@@ -126,6 +128,7 @@ public class SelfServiceController {
             proposal.setValor_desejado(data.getValorDesejado());
             proposal.setPrazo(data.getPrazo());
             proposal.setUser(user);
+            proposal.setStatus("Em análise");
             proposalRepository.save(proposal);
             aceiteScr.setProposal_id(proposal);
             aceiteScr.setDispositivo("Navegador Web");
