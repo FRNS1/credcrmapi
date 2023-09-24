@@ -52,7 +52,6 @@ public class SelfServiceController {
             RestTemplate restTemplate = new RestTemplate();
             GeoLocation geoLocation = restTemplate.getForObject(uri, GeoLocation.class);
             System.out.println(geoLocation);
-            System.out.println(data.getRendaMedia());
             String finalLocation = geoLocation.getLat() + " " + geoLocation.getLon();
             Optional<Users> optionalUser = usersRepository.findById(data.getCodigo_indicador());
             Users user = optionalUser.get();
@@ -92,6 +91,15 @@ public class SelfServiceController {
     @PostMapping("/formwebindicacaopj")
     public ResponseEntity formWebPj(IndicacaoPjDTO data, HttpServletRequest request){
         try{
+            String ip = request.getRemoteAddr();
+            String uri = "http://ip-api.com/json/" + ip;
+            RestTemplate restTemplate = new RestTemplate();
+            GeoLocation geoLocation = restTemplate.getForObject(uri, GeoLocation.class);
+            System.out.println(geoLocation);
+            String finalLocation = geoLocation.getLat() + " " + geoLocation.getLon();
+            Optional<Users> optionalUser = usersRepository.findById(data.getCodigo_indicador());
+            Users user = optionalUser.get();
+            Grupos grupo = user.getGrupo_id();
             Customer customer = new Customer();
             Contacts contact = new Contacts();
             Proposal proposal = new Proposal();
@@ -101,6 +109,8 @@ public class SelfServiceController {
             customer.setRazao_social(data.getRazaoSocial());
             customer.setNome_fantasia(data.getNomeFantasia());
             customer.setSegmento(data.getSegmento());
+            customer.setCreated_by(user);
+            customer.setBusiness(grupo.getNome_grupo());
             customerRepository.save(customer);
             socioPj.setCustomer(customer);
             socioPj.setCpf_socio(data.getCpfSocio());
@@ -114,11 +124,13 @@ public class SelfServiceController {
             proposal.setRenda_media(data.getReceitaMedia());
             proposal.setValor_desejado(data.getValorDesejado());
             proposal.setPrazo(data.getPrazo());
+            proposal.setUser(user);
             proposalRepository.save(proposal);
             aceiteScr.setProposal_id(proposal);
             aceiteScr.setDispositivo("Navegador Web");
             aceiteScr.setData_hora(LocalDateTime.now());
-            aceiteScr.setIp_publico_usuario(request.getRemoteAddr());
+            aceiteScr.setIp_publico_usuario(ip);
+            aceiteScr.setGeolocalizacao(finalLocation);
             aceiteScrRepository.save(aceiteScr);
             return new ResponseEntity("\"Created\"", HttpStatus.OK);
         }catch (Exception e){
