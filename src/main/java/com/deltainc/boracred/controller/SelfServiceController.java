@@ -105,6 +105,7 @@ public class SelfServiceController {
             Proposal proposal = new Proposal();
             SocioPj socioPj = new SocioPj();
             AceiteScr aceiteScr = new AceiteScr();
+            customer.set_cnpj(true);
             customer.setCnpj(data.getCnpj());
             customer.setRazao_social(data.getRazaoSocial());
             customer.setNome_fantasia(data.getNomeFantasia());
