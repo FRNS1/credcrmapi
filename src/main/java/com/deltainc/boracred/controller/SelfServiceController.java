@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("api/v1/business")
@@ -37,6 +38,12 @@ public class SelfServiceController {
     @Autowired
     ProposalRepository proposalRepository;
 
+    @Autowired
+    UsersRepository usersRepository;
+
+    @Autowired
+    GruposRepository gruposRepository;
+
     @PostMapping("/formwebindicacaopf")
     public ResponseEntity formWebPf(@RequestBody IndicacaoPfDTO data, HttpServletRequest request){
         try{
@@ -47,6 +54,9 @@ public class SelfServiceController {
             System.out.println(geoLocation);
             System.out.println(data.getRendaMedia());
             String finalLocation = geoLocation.getLat() + " " + geoLocation.getLon();
+            Optional<Users> optionalUser = usersRepository.findById(data.getCodigo_indicador());
+            Users user = optionalUser.get();
+            Grupos grupo = user.getGrupo_id();
             Customer customer = new Customer();
             Contacts contact = new Contacts();
             Proposal proposal = new Proposal();
@@ -54,6 +64,8 @@ public class SelfServiceController {
             customer.setNome_completo(data.getNome());
             customer.setCpf(data.getCpf());
             customer.setOcupacao(data.getProfissao());
+            customer.setCreated_by(user);
+            customer.setBusiness(grupo.getNome_grupo());
             customerRepository.save(customer);
             contact.setCustomer(customer);
             contact.setTelefone(data.getTelefone());
@@ -63,6 +75,7 @@ public class SelfServiceController {
             proposal.setRenda_media(data.getRendaMedia());
             proposal.setValor_desejado(data.getValorDesejado());
             proposal.setPrazo(data.getPrazo());
+            proposal.setUser(user);
             proposalRepository.save(proposal);
             aceiteScr.setProposal_id(proposal);
             aceiteScr.setDispositivo("Navegador Web");

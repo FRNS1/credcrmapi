@@ -25,6 +25,6 @@ public class IndicacaoPfDTO {
 
     private Integer prazo;
 
-    private String codigo_indicador;
+    private Integer codigo_indicador;
 
 }
