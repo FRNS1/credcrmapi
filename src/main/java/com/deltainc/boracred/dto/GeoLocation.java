@@ -11,6 +11,6 @@ public class GeoLocation {
     private String ip;
     private String city;
     private String country;
-    private String latitude;
-    private String longitude;
+    private double lat;
+    private double lon;
 }
