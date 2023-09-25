@@ -6,6 +6,7 @@ import com.deltainc.boracred.dto.IndicacaoPfDTO;
 import com.deltainc.boracred.dto.IndicacaoPjDTO;
 import com.deltainc.boracred.entity.*;
 import com.deltainc.boracred.repositories.*;
+import com.deltainc.boracred.services.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -43,6 +46,9 @@ public class SelfServiceController {
 
     @Autowired
     GruposRepository gruposRepository;
+
+    @Autowired
+    public EmailService emailService;
 
     @PostMapping("/formwebindicacaopf")
     public ResponseEntity formWebPf(@RequestBody IndicacaoPfDTO data, HttpServletRequest request){
@@ -83,6 +89,22 @@ public class SelfServiceController {
             aceiteScr.setGeolocalizacao(finalLocation);
             aceiteScr.setIp_publico_usuario(ip);
             aceiteScrRepository.save(aceiteScr);
+            List<String> emailsTo = new ArrayList<>();
+            emailsTo.add("joao.fernandes@deltaux.com.br");
+            emailsTo.add("pedro.ricco@deltainvestor.com.br");
+            emailsTo.add("roberto.domiencio@bdidigital.com.br");
+            emailsTo.add("marcelo.rodrigues@bdidigital.com.br");
+            emailsTo.add(user.getEmail());
+            for (String to : emailsTo){
+                System.out.println(to);
+                try {
+                    System.out.println("enviando");
+                    emailService.sendEmailNovaProposta(to, customer.getNome_completo(), proposal.getProposalId(), proposal.getValor_desejado(), proposal.getPrazo());
+                    System.out.println("email enviado");
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
             return new ResponseEntity("Created", HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -140,6 +162,22 @@ public class SelfServiceController {
             socioPj.setNome_socio(data.getNomeSocio());
             socioPj.setCpf_socio(data.getCpfSocio());
             socioPjRepository.save(socioPj);
+            List<String> emailsTo = new ArrayList<>();
+            emailsTo.add("joao.fernandes@deltaux.com.br");
+            emailsTo.add("pedro.ricco@deltainvestor.com.br");
+            emailsTo.add("roberto.domiencio@bdidigital.com.br");
+            emailsTo.add("marcelo.rodrigues@bdidigital.com.br");
+            emailsTo.add(user.getEmail());
+            for (String to : emailsTo){
+                System.out.println(to);
+                try {
+                    System.out.println("enviando");
+                    emailService.sendEmailNovaProposta(to, customer.getRazao_social(), proposal.getProposalId(), proposal.getValor_desejado(), proposal.getPrazo());
+                    System.out.println("email enviado");
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
             return new ResponseEntity("\"Created\"", HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
