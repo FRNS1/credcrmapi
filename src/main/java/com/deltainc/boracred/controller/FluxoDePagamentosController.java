@@ -70,6 +70,7 @@ public class FluxoDePagamentosController {
             for (Proposal proposal : loans){
                 Map<String, Object> response = new HashMap<>();
                 Customer customer = proposal.getCustomer();
+                System.out.println((customer);
                 float saldoDevedor = 0;
                 float receitaEsperada = 0;
                 float amortizacaoPaga = 0;
