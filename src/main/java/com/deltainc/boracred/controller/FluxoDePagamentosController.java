@@ -65,6 +65,7 @@ public class FluxoDePagamentosController {
         try {
             System.out.println("Getting list of contracts");
             List<Proposal> loans = proposalRepository.getAllLoans();
+            System.out.println(loans);
             System.out.println("Got list of contracts");
             List<Map<String, Object>> listLoans = new ArrayList<>();
             for (Proposal proposal : loans){
