@@ -20,7 +20,7 @@ public class FluxoDePagamentos {
     private Integer parcela_id;
 
     @ManyToOne
-    @JoinColumn(name = "proposal_proposal_id")
+    @JoinColumn(name = "proposal.proposal_id")
     private Proposal proposal;
 
     @Column
