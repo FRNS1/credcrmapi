@@ -108,6 +108,7 @@ public class FluxoDePagamentosController {
                         parcelasAtrasadas = parcelasAtrasadas + 1;
                         atrasado = true;
                         totalAtrasado = totalAtrasado + payment2.getPagamento();
+                        String totalAtrasadoFormatado = String.format("%.2f", totalAtrasado); // "%.2f" formata para duas casas decimais
                     }
                 }
                 System.out.println(payments);
