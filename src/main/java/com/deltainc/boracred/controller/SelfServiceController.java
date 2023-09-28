@@ -93,7 +93,7 @@ public class SelfServiceController {
             emailsTo.add("joao.fernandes@deltaux.com.br");
             emailsTo.add("pedro.ricco@deltainvestor.com.br");
             emailsTo.add("roberto.domiencio@bdidigital.com.br");
-            emailsTo.add("marcelo.rodrigues@bdidigital.com.br");
+            emailsTo.add("marcello.rodrigues@bdidigital.com.br");
             emailsTo.add(user.getEmail());
             for (String to : emailsTo){
                 System.out.println(to);
@@ -166,7 +166,7 @@ public class SelfServiceController {
             emailsTo.add("joao.fernandes@deltaux.com.br");
             emailsTo.add("pedro.ricco@deltainvestor.com.br");
             emailsTo.add("roberto.domiencio@bdidigital.com.br");
-            emailsTo.add("marcelo.rodrigues@bdidigital.com.br");
+            emailsTo.add("marcello.rodrigues@bdidigital.com.br");
             emailsTo.add(user.getEmail());
             for (String to : emailsTo){
                 System.out.println(to);

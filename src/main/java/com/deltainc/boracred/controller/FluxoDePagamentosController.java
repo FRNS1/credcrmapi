@@ -1,6 +1,7 @@
 package com.deltainc.boracred.controller;
 
 import com.amazonaws.Response;
+import com.deltainc.boracred.dto.ParcelasUpdateDTO;
 import com.deltainc.boracred.entity.Customer;
 import com.deltainc.boracred.entity.FluxoDePagamentos;
 import com.deltainc.boracred.entity.Proposal;
@@ -11,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -27,6 +25,20 @@ public class FluxoDePagamentosController {
 
     @Autowired
     FluxoDePagamentosRepository fluxoDePagamentosRepository;
+
+    @PostMapping("/update")
+    public ResponseEntity update(@RequestBody ParcelasUpdateDTO data){
+        try {
+            Optional<FluxoDePagamentos> OptionalParcela = fluxoDePagamentosRepository.findById(data.getParcela());
+            FluxoDePagamentos parcela = OptionalParcela.get();
+            parcela.setPagamento(data.getValor_parcela());
+            parcela.setData_pagamento(data.getData_pagamento());
+            parcela.setPago(data.getPago());
+            return new ResponseEntity<>("Created", HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @GetMapping("/closeloan/{id}")
     public ResponseEntity closeLoan(@PathVariable Integer id){
