@@ -77,11 +77,13 @@ public class FluxoDePagamentosController {
         try {
             System.out.println("Getting list of contracts");
             List<Proposal> loans = proposalRepository.getAllLoans();
+            System.out.println(loans);
             System.out.println("Got list of contracts");
             List<Map<String, Object>> listLoans = new ArrayList<>();
             for (Proposal proposal : loans){
                 Map<String, Object> response = new HashMap<>();
                 Customer customer = proposal.getCustomer();
+                System.out.println(customer);
                 float saldoDevedor = 0;
                 float receitaEsperada = 0;
                 float amortizacaoPaga = 0;
@@ -118,6 +120,7 @@ public class FluxoDePagamentosController {
                         parcelasAtrasadas = parcelasAtrasadas + 1;
                         atrasado = true;
                         totalAtrasado = totalAtrasado + payment2.getPagamento();
+                        String totalAtrasadoFormatado = String.format("%.2f", totalAtrasado); // "%.2f" formata para duas casas decimais
                     }
                 }
                 System.out.println(payments);
