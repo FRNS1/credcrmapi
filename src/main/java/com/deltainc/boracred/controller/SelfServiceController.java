@@ -81,7 +81,7 @@ public class SelfServiceController {
             proposal.setValor_desejado(data.getValorDesejado());
             proposal.setPrazo(data.getPrazo());
             proposal.setUser(user);
-            proposal.setStatus("Em análise");
+            proposal.setStatus("EM ANALISE");
             proposalRepository.save(proposal);
             aceiteScr.setProposal_id(proposal);
             aceiteScr.setDispositivo("Navegador Web");
@@ -150,7 +150,7 @@ public class SelfServiceController {
             proposal.setValor_desejado(data.getValorDesejado());
             proposal.setPrazo(data.getPrazo());
             proposal.setUser(user);
-            proposal.setStatus("Em análise");
+            proposal.setStatus("EM ANALISE");
             proposalRepository.save(proposal);
             aceiteScr.setProposal_id(proposal);
             aceiteScr.setDispositivo("Navegador Web");
