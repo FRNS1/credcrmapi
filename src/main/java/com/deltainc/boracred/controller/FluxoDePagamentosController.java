@@ -62,6 +62,7 @@ public class FluxoDePagamentosController {
         try{
             System.out.println("Estou tentando");
             Optional<FluxoDePagamentos> OptionalParcela = fluxoDePagamentosRepository.findById(data.getParcela());
+            System.out.println("Optional" + OptionalParcela);
             FluxoDePagamentos parcela = OptionalParcela.get();
             System.out.println("Alterando parcela: " + parcela);
             parcela.setPago(data.getPago());
