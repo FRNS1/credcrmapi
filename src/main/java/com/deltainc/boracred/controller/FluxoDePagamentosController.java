@@ -61,9 +61,9 @@ public class FluxoDePagamentosController {
     public ResponseEntity updatePago(@RequestBody ParcelasUpdateDTO data){
         try{
             System.out.println("Estou tentando");
-            Optional<FluxoDePagamentos> OptionalParcela = fluxoDePagamentosRepository.findById(data.getParcela());
-            System.out.println("Optional" + OptionalParcela);
-            FluxoDePagamentos parcela = OptionalParcela.get();
+            Optional<FluxoDePagamentos> optionalParcela = fluxoDePagamentosRepository.findById(data.getParcela());
+            System.out.println("Optional" + optionalParcela);
+            FluxoDePagamentos parcela = optionalParcela.get();
             System.out.println("Alterando parcela: " + parcela);
             parcela.setPago(data.getPago());
             fluxoDePagamentosRepository.save(parcela);
