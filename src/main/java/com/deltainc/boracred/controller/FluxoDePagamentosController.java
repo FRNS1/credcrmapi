@@ -60,7 +60,7 @@ public class FluxoDePagamentosController {
     @PostMapping("/update/pago")
     public ResponseEntity updatePago(@RequestBody ParcelasUpdateDTO data){
         try{
-            System.out.println("Estou tentando");
+            System.out.println("Estou tentando " + data.getParcela());
             Optional<FluxoDePagamentos> optionalParcela = fluxoDePagamentosRepository.findById(data.getParcela());
             System.out.println("Optional" + optionalParcela);
             FluxoDePagamentos parcela = optionalParcela.get();
