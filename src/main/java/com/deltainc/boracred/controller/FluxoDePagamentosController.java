@@ -68,11 +68,11 @@ public class FluxoDePagamentosController {
             System.out.println("Parcela alterada" + parcela);
             return new ResponseEntity<>("Updated", HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("erro" + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping("/update/datapagamento")
+    @PostMapping("/update/datap agamento")
     public ResponseEntity updateDataPagamento(@RequestBody ParcelasUpdateDTO data){
         try{
             Optional<FluxoDePagamentos> OptionalParcela = fluxoDePagamentosRepository.findById(data.getParcela());
