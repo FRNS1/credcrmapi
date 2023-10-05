@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Controller
@@ -25,6 +26,66 @@ public class FluxoDePagamentosController {
 
     @Autowired
     FluxoDePagamentosRepository fluxoDePagamentosRepository;
+
+    @PostMapping("/update/vencimento")
+    public ResponseEntity updateVencimento(@RequestBody ParcelasUpdateDTO data){
+        try{
+            Optional<FluxoDePagamentos> OptionalParcela = fluxoDePagamentosRepository.findById(data.getParcela());
+            FluxoDePagamentos parcela = OptionalParcela.get();
+            System.out.println("Alterando parcela: " + parcela);
+            parcela.setVencimento(data.getVencimento());
+            fluxoDePagamentosRepository.save(parcela);
+            System.out.println("Parcela alterada" + parcela);
+            return new ResponseEntity<>("Updated", HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/update/valorparcela")
+    public ResponseEntity updateValorParcela(@RequestBody ParcelasUpdateDTO data){
+        try{
+            Optional<FluxoDePagamentos> OptionalParcela = fluxoDePagamentosRepository.findById(data.getParcela());
+            FluxoDePagamentos parcela = OptionalParcela.get();
+            System.out.println("Alterando parcela: " + parcela);
+            parcela.setPagamento(data.getValor_parcela());
+            fluxoDePagamentosRepository.save(parcela);
+            System.out.println("Parcela alterada" + parcela);
+            return new ResponseEntity<>("Updated", HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/update/pago")
+    public ResponseEntity updatePago(@RequestBody ParcelasUpdateDTO data){
+        try{
+            Optional<FluxoDePagamentos> OptionalParcela = fluxoDePagamentosRepository.findById(data.getParcela());
+            FluxoDePagamentos parcela = OptionalParcela.get();
+            System.out.println("Alterando parcela: " + parcela);
+            parcela.setPago(data.getPago());
+            fluxoDePagamentosRepository.save(parcela);
+            System.out.println("Parcela alterada" + parcela);
+            return new ResponseEntity<>("Updated", HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/update/dataPagamento")
+    public ResponseEntity updateDataPagamento(@RequestBody ParcelasUpdateDTO data){
+        try{
+            Optional<FluxoDePagamentos> OptionalParcela = fluxoDePagamentosRepository.findById(data.getParcela());
+            FluxoDePagamentos parcela = OptionalParcela.get();
+            System.out.println("Alterando parcela: " + parcela);
+            parcela.setData_pagamento(data.getData_pagamento());
+            fluxoDePagamentosRepository.save(parcela);
+            System.out.println("Parcela alterada" + parcela);
+            return new ResponseEntity<>("Updated", HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody ParcelasUpdateDTO data){

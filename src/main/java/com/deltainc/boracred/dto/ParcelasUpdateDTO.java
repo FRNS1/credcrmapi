@@ -19,4 +19,6 @@ public class ParcelasUpdateDTO {
 
     private LocalDate data_pagamento;
 
+    private LocalDate vencimento;
+
 }
