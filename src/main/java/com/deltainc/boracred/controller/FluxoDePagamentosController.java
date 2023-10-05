@@ -31,9 +31,11 @@ public class FluxoDePagamentosController {
         try {
             Optional<FluxoDePagamentos> OptionalParcela = fluxoDePagamentosRepository.findById(data.getParcela());
             FluxoDePagamentos parcela = OptionalParcela.get();
+            System.out.println("Alterando parcela: " + parcela);
             parcela.setPagamento(data.getValor_parcela());
             parcela.setData_pagamento(data.getData_pagamento());
             parcela.setPago(data.getPago());
+            System.out.println("Parcela alterada" + parcela);
             return new ResponseEntity<>("Created", HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
