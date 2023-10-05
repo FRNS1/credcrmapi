@@ -35,6 +35,7 @@ public class FluxoDePagamentosController {
             parcela.setPagamento(data.getValor_parcela());
             parcela.setData_pagamento(data.getData_pagamento());
             parcela.setPago(data.getPago());
+            fluxoDePagamentosRepository.save(parcela);
             System.out.println("Parcela alterada" + parcela);
             return new ResponseEntity<>("Created", HttpStatus.OK);
         } catch (Exception e){
