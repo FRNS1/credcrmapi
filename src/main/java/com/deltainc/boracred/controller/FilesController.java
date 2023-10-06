@@ -47,6 +47,7 @@ public class FilesController {
     @PostMapping("/filesdata")
     public ResponseEntity filesDataRegister(@RequestBody FilesUploadDTO data){
         try {
+            System.out.println(data.getProposal());
             System.out.println(fileNameWithMLGeneral.getFileName());
             String fileName = fileNameWithMLGeneral.getFileName().replace(" ", "+");
             Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal());
