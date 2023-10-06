@@ -46,32 +46,38 @@ public class FilesController {
 
     @PostMapping("/filesdata")
     public ResponseEntity filesDataRegister(@RequestBody FilesUploadDTO data){
-        System.out.println(fileNameWithMLGeneral.getFileName());
-        String fileName = fileNameWithMLGeneral.getFileName().replace(" ", "+");
-        Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal());
-        Proposal proposal = optionalProposal.get();
-        Optional<Users> optionalUsers = usersRepository.findById(data.getUser_id());
-        Users users = optionalUsers.get();
-        Files newFile = new Files();
-        newFile.setProposal(proposal);
-        newFile.setTipo_arquivo(data.getTipoArquivo());
-        newFile.setFile_name(data.getFilaName());
-        newFile.setUrl_arquivo("https://docsbora.s3.amazonaws.com/" + fileName);
-        filesRepository.save(newFile);
-        // LOGS
-        String action = "Register";
-        LocalDateTime dataAcao = LocalDateTime.now();
-        Integer target = newFile.getFiles_id();
-        String target_type = "Files";
-        Logs log = new Logs();
-        log.setUser(users);
-        log.setAction(action);
-        log.setAction_date(dataAcao);
-        log.setTarget(target);
-        log.setTarget_type(target_type);
-        logsRepository.save(log);
-        // FIM LOGS
-        return new ResponseEntity<>("Created", HttpStatus.CREATED);
+        try {
+            System.out.println(fileNameWithMLGeneral.getFileName());
+            String fileName = fileNameWithMLGeneral.getFileName().replace(" ", "+");
+            Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal());
+            Proposal proposal = optionalProposal.get();
+            Optional<Users> optionalUsers = usersRepository.findById(data.getUser_id());
+            Users users = optionalUsers.get();
+            Files newFile = new Files();
+            newFile.setProposal(proposal);
+            newFile.setTipo_arquivo(data.getTipoArquivo());
+            newFile.setFile_name(data.getFilaName());
+            newFile.setUrl_arquivo("https://docsbora.s3.amazonaws.com/" + fileName);
+            filesRepository.save(newFile);
+            // LOGS
+            String action = "Register";
+            LocalDateTime dataAcao = LocalDateTime.now();
+            Integer target = newFile.getFiles_id();
+            String target_type = "Files";
+            Logs log = new Logs();
+            log.setUser(users);
+            log.setAction(action);
+            log.setAction_date(dataAcao);
+            log.setTarget(target);
+            log.setTarget_type(target_type);
+            logsRepository.save(log);
+            // FIM LOGS
+            return new ResponseEntity<>("Created", HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 }
