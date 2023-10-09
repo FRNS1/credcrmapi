@@ -51,7 +51,9 @@ public class FilesController {
             System.out.println(fileNameWithMLGeneral.getFileName());
             String fileName = fileNameWithMLGeneral.getFileName().replace(" ", "+");
             Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal());
+            System.out.println(optionalProposal + " ACHEEEEEEEEI");
             Proposal proposal = optionalProposal.get();
+            System.out.println(proposal + " ACHEEEEEEEEI");
             Optional<Users> optionalUsers = usersRepository.findById(data.getUser_id());
             Users users = optionalUsers.get();
             Files newFile = new Files();

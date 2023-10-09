@@ -74,7 +74,7 @@ public class FluxoDePagamentosController {
         }
     }
 
-    @PostMapping("/update/datap agamento")
+    @PostMapping("/update/datapagamento")
     public ResponseEntity updateDataPagamento(@RequestBody ParcelasUpdateDTO data){
         try{
             Optional<FluxoDePagamentos> OptionalParcela = fluxoDePagamentosRepository.findById(data.getParcela());
