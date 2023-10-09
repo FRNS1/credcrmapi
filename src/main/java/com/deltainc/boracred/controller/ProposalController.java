@@ -84,7 +84,7 @@ public class ProposalController {
             proposal.setCustomer(customer);
             proposal.setValor_desejado(registerData.getValor_desejado());
             proposal.setPrazo(registerData.getPrazo());
-            proposal.setStatus("Em análise");
+            proposal.setStatus("EM ANALISE");
             proposal.setObservacao_cliente(registerData.getObservacao_cliente());
             proposal.setData_abertura(LocalDate.now());
             proposal.setUser(user);
