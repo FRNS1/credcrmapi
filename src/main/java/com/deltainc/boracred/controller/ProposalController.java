@@ -431,6 +431,8 @@ public class ProposalController {
                         }
                     }
                 }
+                System.out.println(data.getRenda_media());
+                System.out.println(proposal.getRenda_media());
                 proposalRepository.save(proposal);
             }
             return new ResponseEntity<>("Updated", HttpStatus.OK);
