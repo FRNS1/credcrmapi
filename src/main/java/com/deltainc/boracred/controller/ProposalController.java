@@ -401,7 +401,7 @@ public class ProposalController {
                 proposal.setObservacao_analista(data.getObservacao_analista());
                 proposal.setRenda_media(data.getRenda_media());
                 System.out.println(proposal.getStatus());
-                if ("Aprovado".equals(proposal.getStatus())){
+                if ("APROVADO".equals(proposal.getStatus())){
                     System.out.println("aprovado");
                     Customer customer = proposal.getCustomer();
                     Users user = proposal.getUser();
