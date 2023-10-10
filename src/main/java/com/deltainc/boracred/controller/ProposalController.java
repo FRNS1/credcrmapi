@@ -229,6 +229,7 @@ public class ProposalController {
         response.put("proposalId", proposal.getProposalId());
         response.put("customerName", customer.getNome_completo());
         response.put("customerRazaoSocial", customer.getRazao_social());
+        response.put("customerRendaMedia", proposal.getRenda_media());
         response.put("cnpj", customer.getCnpj());
         response.put("cpf", customer.getCpf());
         response.put("valorDesejado", proposal.getValor_desejado());

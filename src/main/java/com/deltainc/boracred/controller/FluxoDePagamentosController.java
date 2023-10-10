@@ -27,6 +27,24 @@ public class FluxoDePagamentosController {
     @Autowired
     FluxoDePagamentosRepository fluxoDePagamentosRepository;
 
+    @PostMapping("/finishcontract/{proposal}")
+    public ResponseEntity finishContract(@PathVariable Integer proposalId){
+        try{
+            Optional<Proposal> optionalProposal = proposalRepository.findById(proposalId);
+            if (optionalProposal.isPresent()){
+                Proposal proposal = optionalProposal.get();
+                proposal.setStatus_contrato("QUITADO");
+                proposalRepository.save(proposal);
+                return new ResponseEntity<>("Quitado", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Not found", HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/update/vencimento")
     public ResponseEntity updateVencimento(@RequestBody ParcelasUpdateDTO data){
         try{
