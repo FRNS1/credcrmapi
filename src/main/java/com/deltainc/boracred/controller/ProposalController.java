@@ -399,6 +399,7 @@ public class ProposalController {
                 proposal.setMotivo_reprovacao(data.getMotivo_reprovacao());
                 proposal.setObservacao_cliente(data.getObservacao_cliente());
                 proposal.setObservacao_analista(data.getObservacao_analista());
+                proposal.setRenda_media(data.getRenda_media());
                 System.out.println(proposal.getStatus());
                 if ("Aprovado".equals(proposal.getStatus())){
                     System.out.println("aprovado");

@@ -69,5 +69,7 @@ public class ProposalUpdateDTO {
 
     private boolean pep;
 
+    private float renda_media;
+
 
 }
