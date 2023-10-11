@@ -16,7 +16,7 @@ import com.deltainc.boracred.htmltemplates.EmailTemplates;
 public class EmailService {
 
     public void sendEmailAprovado(String to, String nomeCliente, Integer idProposta, Float taxa, Float valorLiberado, Integer prazo) throws Exception{
-        String subject = String.format("O cliente %s, aceitou a proposta %d", nomeCliente, idProposta);
+        String subject = String.format("A proposta %d foi aprovada", idProposta);
         String htmlContent = EmailTemplates.templateAprovado;
         htmlContent = htmlContent.replace("${nomeCliente}", nomeCliente);
         htmlContent = htmlContent.replace("${idProposta}", idProposta.toString());
@@ -27,7 +27,7 @@ public class EmailService {
     }
 
     public void sendEmailPreAprovado(String to, String nomeCliente, Integer idProposta, Float taxa, Float valorLiberado, Integer prazo) throws Exception{
-        String subject = String.format("O cliente %s, aceitou a proposta %d", nomeCliente, idProposta);
+        String subject = String.format("A proposta %d foi pre aprovada", idProposta);
         String htmlContent = EmailTemplates.templatePreAprovado;
         htmlContent = htmlContent.replace("${nomeCliente}", nomeCliente);
         htmlContent = htmlContent.replace("${idProposta}", idProposta.toString());

@@ -415,7 +415,7 @@ public class EmailTemplates {
             "                                    <tr>\n" +
             "                                        <td class=\"v-container-padding-padding\" style=\"overflow-wrap:break-word;word-break:break-word;padding:100px 10px 10px;font-family:'Montserrat',sans-serif;\" align=\"left\">\n" +
             "\n" +
-            "                                            <h3 class=\"v-text-align v-line-height v-font-size\" style=\"margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-size: 18px;\"><strong>Pode seguir com as condições que estao no sistema : Taxa: ${taxa}, Prazo: ${prazo}, Valor liberado: ${valorLiberado}</strong></h3>\n" +
+            "                                            <h3 class=\"v-text-align v-line-height v-font-size\" style=\"margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-size: 18px;\"><strong>A proposta foi pre aprovada!</h3>\n" +
             "\n" +
             "                                        </td>\n" +
             "                                    </tr>\n" +
