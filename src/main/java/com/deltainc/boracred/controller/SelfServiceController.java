@@ -107,6 +107,7 @@ public class SelfServiceController {
             }
             return new ResponseEntity("Created", HttpStatus.OK);
         }catch (Exception e){
+            System.out.println(e);
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
