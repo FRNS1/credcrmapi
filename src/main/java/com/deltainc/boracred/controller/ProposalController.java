@@ -407,8 +407,10 @@ public class ProposalController {
                     Users user = proposal.getUser();
                     List<String> emailsTo = new ArrayList<>();
                     emailsTo.add("joao.fernandes@deltaux.com.br");
+                    emailsTo.add("matheus.fernandes@bdidigital.com.br");
+                    emailsTo.add("marcello.rodrigues@bdidigital.com.br");
+                    emailsTo.add("roberto.domiencio@bdidigital.com.br");
                     emailsTo.add("controladoria@deltaux.com.br");
-                    emailsTo.add("pedro.ricco@deltainvestor.com.br");
                     emailsTo.add(user.getEmail());
                     for (String to : emailsTo) {
                         System.out.println(to);
@@ -424,6 +426,34 @@ public class ProposalController {
                             try {
                                 System.out.println("enviando");
                                 emailService.sendEmailAprovado(to, customer.getRazao_social(), proposal.getProposalId(), proposal.getTaxa(), proposal.getValor_liberado(), proposal.getPrazo());
+                                System.out.println("email enviado");
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
+                        }
+                    }
+                } else if ("PRE APROVADO".equals(proposal.getStatus())){
+                    System.out.println("pre aprovado");
+                    Customer customer = proposal.getCustomer();
+                    Users user = proposal.getUser();
+                    List<String> emailsTo = new ArrayList<>();
+                    emailsTo.add("joao.fernandes@deltaux.com.br");
+                    emailsTo.add("matheus.fernandes@bdidigital.com.br");
+                    emailsTo.add("pedro.ricco@deltainvestor.com.br");
+                    for (String to : emailsTo) {
+                        System.out.println(to);
+                        if (customer.is_cnpj() != true) {
+                            try {
+                                System.out.println("enviando");
+                                emailService.sendEmailPreAprovado(to, customer.getNome_completo(), proposal.getProposalId(), proposal.getTaxa(), proposal.getValor_liberado(), proposal.getPrazo());
+                                System.out.println("email enviado");
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
+                        } else {
+                            try {
+                                System.out.println("enviando");
+                                emailService.sendEmailPreAprovado(to, customer.getRazao_social(), proposal.getProposalId(), proposal.getTaxa(), proposal.getValor_liberado(), proposal.getPrazo());
                                 System.out.println("email enviado");
                             } catch (Exception e) {
                                 System.out.println(e);
