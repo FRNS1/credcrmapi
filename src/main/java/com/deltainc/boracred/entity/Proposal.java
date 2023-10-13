@@ -27,7 +27,7 @@ public class Proposal {
     private Users user;
 
     @ManyToOne
-    @JoinColumn(name = "users.user_id")
+    @JoinColumn(name = "users.analista_id")
     private Users analista;
 
     @Column
