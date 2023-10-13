@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +82,7 @@ public class SelfServiceController {
             proposal.setValor_desejado(data.getValorDesejado());
             proposal.setPrazo(data.getPrazo());
             proposal.setUser(user);
+            proposal.setData_abertura(LocalDate.now());
             proposal.setStatus("EM ANALISE");
             proposalRepository.save(proposal);
             aceiteScr.setProposal_id(proposal);
@@ -151,6 +153,7 @@ public class SelfServiceController {
             proposal.setValor_desejado(data.getValorDesejado());
             proposal.setPrazo(data.getPrazo());
             proposal.setUser(user);
+            proposal.setData_abertura(LocalDate.now());
             proposal.setStatus("EM ANALISE");
             proposalRepository.save(proposal);
             aceiteScr.setProposal_id(proposal);
