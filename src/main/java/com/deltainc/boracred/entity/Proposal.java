@@ -27,8 +27,8 @@ public class Proposal {
     private Users user;
 
     @ManyToOne
-    @JoinColumn(name = "analista")
-    private Users userLog;
+    @JoinColumn(name = "users.user_id")
+    private Users analista;
 
     @Column
     private float valor_desejado;
