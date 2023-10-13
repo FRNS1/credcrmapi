@@ -356,6 +356,7 @@ public class ProposalController {
             Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
             System.out.println("Consegui o optional");
             Users userLog = optionalUser.get();
+            Users analista = optionalUser.get();
             System.out.println(userLog);
             Optional<Proposal> optionalProposal = proposalRepository.findById(data.getProposal_id());
             if (optionalProposal.isPresent()){
@@ -385,6 +386,7 @@ public class ProposalController {
                     System.out.println("erro " + e);
                 }
                 // fim Logs
+                proposal.setAnalista(analista);
                 proposal.setValor_desejado(data.getValor_desejado());
                 proposal.setTaxa(data.getTaxa());
                 proposal.setCorban(data.getCorban());
