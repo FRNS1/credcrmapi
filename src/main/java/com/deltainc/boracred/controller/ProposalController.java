@@ -51,6 +51,12 @@ public class ProposalController {
     LogsRepository logsRepository;
 
     @Autowired
+    SocioPjRepository socioPjRepository;
+
+    @Autowired
+    ReferenciaRepository referenciaRepository;
+
+    @Autowired
     public EmailService emailService;
 
     @GetMapping("/loans/getproposal/info/{id}")
@@ -224,6 +230,9 @@ public class ProposalController {
         System.out.println(proposal.getProposalId());
         List<Files> files = filesRepository.findByProposal(proposal.getProposalId());
         System.out.println(files);
+        Contacts contact = contactsRepository.findByCustomer(customer);
+        SocioPj socio = socioPjRepository.findByCustomer(customer);
+        Referencia referencia = referenciaRepository.findByCustomer(customer);
         HashMap<String, Object> response = new HashMap<>();
         response.put("isCnpj", customer.is_cnpj());
         response.put("proposalId", proposal.getProposalId());
@@ -246,6 +255,14 @@ public class ProposalController {
         response.put("motivoReprovacao", proposal.getMotivo_reprovacao());
         response.put("observacaoCliente", proposal.getObservacao_cliente());
         response.put("observacaoAnalista", proposal.getObservacao_analista());
+        response.put("email", contact.getEmail());
+        response.put("telefone", contact.getTelefone());
+        response.put("nome_sociopj", socio.getNome_socio());
+        response.put("cpf_socio", socio.getCpf_socio());
+        response.put("nome_referencia", referencia.getNomeCompleto());
+        response.put("email_referencia", referencia.getEmail());
+        response.put("cpf_referencia", referencia.getCpf());
+        response.put("telefone_referencia", referencia.getTelefone());
         if (analytics != null) {
             HashMap<String, Object> responseAnalytics = new HashMap<>();
             responseAnalytics.put("num_titulos_protestados", analytics.getNum_titulos_protestados());
