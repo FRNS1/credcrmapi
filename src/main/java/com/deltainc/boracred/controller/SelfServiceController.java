@@ -182,6 +182,7 @@ public class SelfServiceController {
             referencia.setEmail(data.getEmail_referencia());
             referencia.setTelefone(data.getTelefone_referencia());
             referencia.setCustomer(customer);
+            referenciaRepository.save(referencia);
             List<String> emailsTo = new ArrayList<>();
             emailsTo.add("joao.fernandes@deltaux.com.br");
             emailsTo.add("pedro.ricco@deltainvestor.com.br");
