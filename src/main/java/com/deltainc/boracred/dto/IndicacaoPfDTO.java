@@ -27,4 +27,12 @@ public class IndicacaoPfDTO {
 
     private Integer codigo_indicador;
 
+    private String nome_referencia;
+
+    private String documento;
+
+    private String email_referencia;
+
+    private String telefone_referencia;
+
 }

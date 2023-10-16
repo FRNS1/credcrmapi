@@ -51,6 +51,9 @@ public class SelfServiceController {
     @Autowired
     public EmailService emailService;
 
+    @Autowired
+    ReferenciaRepository referenciaRepository;
+
     @PostMapping("/formwebindicacaopf")
     public ResponseEntity formWebPf(@RequestBody IndicacaoPfDTO data, HttpServletRequest request){
         try{
@@ -91,6 +94,12 @@ public class SelfServiceController {
             aceiteScr.setGeolocalizacao(finalLocation);
             aceiteScr.setIp_publico_usuario(ip);
             aceiteScrRepository.save(aceiteScr);
+            Referencia referencia = new Referencia();
+            referencia.setNomeCompleto(data.getNome_referencia());
+            referencia.setCpf(data.getDocumento());
+            referencia.setEmail(data.getEmail_referencia());
+            referencia.setTelefone(data.getTelefone_referencia());
+            referencia.setCustomer(customer);
             List<String> emailsTo = new ArrayList<>();
             emailsTo.add("joao.fernandes@deltaux.com.br");
             emailsTo.add("pedro.ricco@deltainvestor.com.br");
@@ -166,6 +175,12 @@ public class SelfServiceController {
             socioPj.setNome_socio(data.getNomeSocio());
             socioPj.setCpf_socio(data.getCpfSocio());
             socioPjRepository.save(socioPj);
+            Referencia referencia = new Referencia();
+            referencia.setNomeCompleto(data.getNome_referencia());
+            referencia.setCpf(data.getDocumento());
+            referencia.setEmail(data.getEmail_referencia());
+            referencia.setTelefone(data.getTelefone_referencia());
+            referencia.setCustomer(customer);
             List<String> emailsTo = new ArrayList<>();
             emailsTo.add("joao.fernandes@deltaux.com.br");
             emailsTo.add("pedro.ricco@deltainvestor.com.br");

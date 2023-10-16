@@ -37,4 +37,12 @@ public class IndicacaoPjDTO {
 
     private LocalDate data_abertura;
 
+    private String nome_referencia;
+
+    private String documento;
+
+    private String email_referencia;
+
+    private String telefone_referencia;
+
 }
