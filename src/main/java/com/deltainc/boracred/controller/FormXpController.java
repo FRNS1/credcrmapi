@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -17,7 +18,7 @@ public class FormXpController {
     FormXpRepository formXpRepository;
 
     @PostMapping("/register")
-    public ResponseEntity register(FormXP data){
+    public ResponseEntity register(@RequestBody FormXP data){
         try {
             FormXP form = new FormXP();
             form.setNome_completo(data.getNome_completo());
