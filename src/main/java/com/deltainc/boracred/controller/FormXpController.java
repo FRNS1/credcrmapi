@@ -19,6 +19,8 @@ public class FormXpController {
     @PostMapping("/register")
     public ResponseEntity register(FormXP data){
         try {
+            FormXP form = new FormXP();
+            form.setNome_completo(data.getNome_completo());
             formXpRepository.save(data);
             return new ResponseEntity<>("Created", HttpStatus.OK);
         } catch (Exception e){
