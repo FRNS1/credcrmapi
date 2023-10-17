@@ -257,6 +257,7 @@ public class ProposalController {
         response.put("observacaoAnalista", proposal.getObservacao_analista());
         response.put("email", contact.getEmail());
         response.put("telefone", contact.getTelefone());
+        response.put("segmento", customer.getSegmento());
         try {
             response.put("nome_sociopj", socio.getNome_socio());
             response.put("cpf_socio", socio.getCpf_socio());
