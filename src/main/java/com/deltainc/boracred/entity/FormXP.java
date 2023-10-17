@@ -55,10 +55,6 @@ public class FormXP {
     @Column
     private Boolean vinculado_xp;
     @Column
-    private Boolean us_person;
-    @Column
-    private Boolean pep;
-    @Column
     private String cep;
     @Column
     private String endereco;
