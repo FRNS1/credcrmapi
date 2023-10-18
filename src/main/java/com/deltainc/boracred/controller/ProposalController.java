@@ -261,19 +261,24 @@ public class ProposalController {
         try {
             response.put("nome_sociopj", socio.getNome_socio());
             response.put("cpf_socio", socio.getCpf_socio());
+        } catch (Exception e) {
+            response.put("nome_sociopj", "Sem dados");
+            response.put("cpf_socio", "Sem dados");
+            System.out.println(e);
+        }
+        try {
             response.put("nome_referencia", referencia.getNomeCompleto());
             response.put("email_referencia", referencia.getEmail());
             response.put("cpf_referencia", referencia.getCpf());
             response.put("telefone_referencia", referencia.getTelefone());
         } catch (Exception e) {
-            response.put("nome_sociopj", "Sem dados");
-            response.put("cpf_socio", "Sem dados");
             response.put("nome_referencia", "Sem dados");
             response.put("email_referencia", "Sem dados");
             response.put("cpf_referencia", "Sem dados");
             response.put("telefone_referencia", "Sem dados");
             System.out.println(e);
         }
+
         if (analytics != null) {
             HashMap<String, Object> responseAnalytics = new HashMap<>();
             responseAnalytics.put("num_titulos_protestados", analytics.getNum_titulos_protestados());
