@@ -214,6 +214,7 @@ public class ProposalController {
             Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
             Users user = optionalUser.get();
             List<Customer> allCustomers = customerRepository.findByCreatedBy(user);
+            System.out.println("aqui " + allCustomers);
             for (Customer customer : allCustomers){
                 HashMap<String, Object> response = new HashMap<>();
                 List<Proposal> proposals = proposalRepository.findByCustomer(customer);
