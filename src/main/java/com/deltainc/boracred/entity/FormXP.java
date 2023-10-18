@@ -53,7 +53,7 @@ public class FormXP {
     @Column
     private String genero;
     @Column
-    private Boolean vinculado_xp;
+    private List<String> declaracoes;
     @Column
     private String cep;
     @Column
