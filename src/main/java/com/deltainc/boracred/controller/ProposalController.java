@@ -193,6 +193,7 @@ public class ProposalController {
             Users user = optionalUser.get();
             String grupoPesquisa = data.getGrupo().replace(" MASTER", "");
             List<Customer> allCustomers = customerRepository.findByBusinessAndCreatedBy(grupoPesquisa, user);
+            System.out.println("customers " + allCustomers);
             for (Customer customer : allCustomers){
                 HashMap<String, Object> response = new HashMap<>();
                 List<Proposal> proposals = proposalRepository.findByCustomer(customer);
