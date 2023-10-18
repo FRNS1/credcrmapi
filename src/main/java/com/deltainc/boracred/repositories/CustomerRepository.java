@@ -15,8 +15,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     List<Customer> findByBusinessAndCreatedBy(@Param("business") String business, @Param("createdBy") Users createdBy);
 
     List<Customer> findByBusiness(String business);
-    @Query("SELECT c FROM Customer c WHERE c.customer_id = :customer_id GROUP BY c.customer_id ORDER BY c.customer_id DESC")
-    List<Customer> findAll(@Param("customer_id") Integer customer_id);
+
+    @Query("SELECT c FROM Customer c GROUP BY c.customer_id ORDER BY c.customer_id DESC")
+    List<Customer> findAll();
 
     @Query("SELECT c FROM Customer c WHERE c.created_by = :createdBy GROUP BY c.customer_id ORDER BY c.customer_id DESC")
     List<Customer> findByCreatedBy(@Param("createdBy") Users createdBy);
