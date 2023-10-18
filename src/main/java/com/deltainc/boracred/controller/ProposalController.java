@@ -191,8 +191,11 @@ public class ProposalController {
         } else if (data.getGrupo().contains(magicWord)){
             Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
             Users user = optionalUser.get();
+            System.out.println("user = " + user);
             String grupoPesquisa = data.getGrupo().replace(" MASTER", "");
+            System.out.println("grupo = " + grupoPesquisa);
             List<Customer> allCustomers = customerRepository.findByBusinessAndCreatedBy(grupoPesquisa, user);
+            System.out.println("customers " + allCustomers);
             for (Customer customer : allCustomers){
                 HashMap<String, Object> response = new HashMap<>();
                 List<Proposal> proposals = proposalRepository.findByCustomer(customer);
@@ -207,11 +210,33 @@ public class ProposalController {
                     response2.put("cnpj", customer.getCnpj());
                     response2.put("status", proposal.getStatus());
                     response2.put("proposalId", proposal.getProposalId());
-                    listResponse.add(response);
+                    listResponse.add(response2);
+                }
+            } return new ResponseEntity<>(listResponse, HttpStatus.OK);
+        } else {
+            Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
+            Users user = optionalUser.get();
+            List<Customer> allCustomers = customerRepository.findByCreatedBy(user);
+            for (Customer customer : allCustomers){
+                HashMap<String, Object> response = new HashMap<>();
+                List<Proposal> proposals = proposalRepository.findByCustomer(customer);
+                for (Proposal proposal : proposals) {
+                    HashMap<String, Object> response3 = new HashMap<>();
+                    response3.put("indicador", customer.getCreated_by());
+                    response3.put("business", customer.getBusiness());
+                    response3.put("dataCriacao", proposal.getData_abertura());
+                    response3.put("razaoSocial", customer.getRazao_social());
+                    response3.put("nomeCompleto", customer.getNome_completo());
+                    response3.put("cpf", customer.getCpf());
+                    response3.put("cnpj", customer.getCnpj());
+                    response3.put("status", proposal.getStatus());
+                    response3.put("proposalId", proposal.getProposalId());
+                    listResponse.add(response3);
                 }
             }
+            System.out.println("lista " + listResponse);
+            return new ResponseEntity<>(listResponse, HttpStatus.OK);
         }
-        return new ResponseEntity<>(listResponse, HttpStatus.OK);
     }
 
     @GetMapping("/getall")
@@ -261,19 +286,24 @@ public class ProposalController {
         try {
             response.put("nome_sociopj", socio.getNome_socio());
             response.put("cpf_socio", socio.getCpf_socio());
+        } catch (Exception e) {
+            response.put("nome_sociopj", "Sem dados");
+            response.put("cpf_socio", "Sem dados");
+            System.out.println(e);
+        }
+        try {
             response.put("nome_referencia", referencia.getNomeCompleto());
             response.put("email_referencia", referencia.getEmail());
             response.put("cpf_referencia", referencia.getCpf());
             response.put("telefone_referencia", referencia.getTelefone());
         } catch (Exception e) {
-            response.put("nome_sociopj", "Sem dados");
-            response.put("cpf_socio", "Sem dados");
             response.put("nome_referencia", "Sem dados");
             response.put("email_referencia", "Sem dados");
             response.put("cpf_referencia", "Sem dados");
             response.put("telefone_referencia", "Sem dados");
             System.out.println(e);
         }
+
         if (analytics != null) {
             HashMap<String, Object> responseAnalytics = new HashMap<>();
             responseAnalytics.put("num_titulos_protestados", analytics.getNum_titulos_protestados());
