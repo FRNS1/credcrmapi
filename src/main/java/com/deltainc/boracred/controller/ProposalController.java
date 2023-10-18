@@ -218,6 +218,7 @@ public class ProposalController {
             for (Customer customer : allCustomers){
                 HashMap<String, Object> response = new HashMap<>();
                 List<Proposal> proposals = proposalRepository.findByCustomer(customer);
+                System.out.println("propostas " + proposals);
                 for (Proposal proposal : proposals) {
                     HashMap<String, Object> response2 = new HashMap<>();
                     response2.put("indicador", customer.getCreated_by());
@@ -229,6 +230,7 @@ public class ProposalController {
                     response2.put("cnpj", customer.getCnpj());
                     response2.put("status", proposal.getStatus());
                     response2.put("proposalId", proposal.getProposalId());
+                    System.out.println("response " + response2);
                     listResponse.add(response);
                 }
             } return new ResponseEntity<>(listResponse, HttpStatus.OK);
