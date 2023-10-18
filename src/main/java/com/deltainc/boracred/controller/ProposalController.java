@@ -233,7 +233,9 @@ public class ProposalController {
                     System.out.println("response " + response2);
                     listResponse.add(response);
                 }
-            } return new ResponseEntity<>(listResponse, HttpStatus.OK);
+            }
+            System.out.println("lista " + listResponse);
+            return new ResponseEntity<>(listResponse, HttpStatus.OK);
         }
     }
 
