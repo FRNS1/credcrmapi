@@ -209,9 +209,29 @@ public class ProposalController {
                     response2.put("proposalId", proposal.getProposalId());
                     listResponse.add(response);
                 }
-            }
+            } return new ResponseEntity<>(listResponse, HttpStatus.OK);
+        } else {
+            Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
+            Users user = optionalUser.get();
+            List<Customer> allCustomers = customerRepository.findByCreatedBy(user);
+            for (Customer customer : allCustomers){
+                HashMap<String, Object> response = new HashMap<>();
+                List<Proposal> proposals = proposalRepository.findByCustomer(customer);
+                for (Proposal proposal : proposals) {
+                    HashMap<String, Object> response2 = new HashMap<>();
+                    response2.put("indicador", customer.getCreated_by());
+                    response2.put("business", customer.getBusiness());
+                    response2.put("dataCriacao", proposal.getData_abertura());
+                    response2.put("razaoSocial", customer.getRazao_social());
+                    response2.put("nomeCompleto", customer.getNome_completo());
+                    response2.put("cpf", customer.getCpf());
+                    response2.put("cnpj", customer.getCnpj());
+                    response2.put("status", proposal.getStatus());
+                    response2.put("proposalId", proposal.getProposalId());
+                    listResponse.add(response);
+                }
+            } return new ResponseEntity<>(listResponse, HttpStatus.OK);
         }
-        return new ResponseEntity<>(listResponse, HttpStatus.OK);
     }
 
     @GetMapping("/getall")
