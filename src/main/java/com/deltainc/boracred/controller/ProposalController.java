@@ -207,31 +207,28 @@ public class ProposalController {
                     response2.put("cnpj", customer.getCnpj());
                     response2.put("status", proposal.getStatus());
                     response2.put("proposalId", proposal.getProposalId());
-                    listResponse.add(response);
+                    listResponse.add(response2);
                 }
             } return new ResponseEntity<>(listResponse, HttpStatus.OK);
         } else {
             Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
             Users user = optionalUser.get();
             List<Customer> allCustomers = customerRepository.findByCreatedBy(user);
-            System.out.println("aqui " + allCustomers);
             for (Customer customer : allCustomers){
                 HashMap<String, Object> response = new HashMap<>();
                 List<Proposal> proposals = proposalRepository.findByCustomer(customer);
-                System.out.println("propostas " + proposals);
                 for (Proposal proposal : proposals) {
-                    HashMap<String, Object> response2 = new HashMap<>();
-                    response2.put("indicador", customer.getCreated_by());
-                    response2.put("business", customer.getBusiness());
-                    response2.put("dataCriacao", proposal.getData_abertura());
-                    response2.put("razaoSocial", customer.getRazao_social());
-                    response2.put("nomeCompleto", customer.getNome_completo());
-                    response2.put("cpf", customer.getCpf());
-                    response2.put("cnpj", customer.getCnpj());
-                    response2.put("status", proposal.getStatus());
-                    response2.put("proposalId", proposal.getProposalId());
-                    System.out.println("response " + response2);
-                    listResponse.add(response);
+                    HashMap<String, Object> response3 = new HashMap<>();
+                    response3.put("indicador", customer.getCreated_by());
+                    response3.put("business", customer.getBusiness());
+                    response3.put("dataCriacao", proposal.getData_abertura());
+                    response3.put("razaoSocial", customer.getRazao_social());
+                    response3.put("nomeCompleto", customer.getNome_completo());
+                    response3.put("cpf", customer.getCpf());
+                    response3.put("cnpj", customer.getCnpj());
+                    response3.put("status", proposal.getStatus());
+                    response3.put("proposalId", proposal.getProposalId());
+                    listResponse.add(response3);
                 }
             }
             System.out.println("lista " + listResponse);
