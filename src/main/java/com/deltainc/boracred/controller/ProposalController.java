@@ -191,7 +191,9 @@ public class ProposalController {
         } else if (data.getGrupo().contains(magicWord)){
             Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
             Users user = optionalUser.get();
+            System.out.println("user = " + user);
             String grupoPesquisa = data.getGrupo().replace(" MASTER", "");
+            System.out.println("grupo = " + grupoPesquisa);
             List<Customer> allCustomers = customerRepository.findByBusinessAndCreatedBy(grupoPesquisa, user);
             System.out.println("customers " + allCustomers);
             for (Customer customer : allCustomers){
