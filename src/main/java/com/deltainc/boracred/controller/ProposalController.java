@@ -191,10 +191,9 @@ public class ProposalController {
         } else if (data.getGrupo().contains(magicWord)){
             Optional<Users> optionalUser = usersRepository.findById(data.getUser_id());
             Users user = optionalUser.get();
-            System.out.println("user = " + user);
             String grupoPesquisa = data.getGrupo().replace(" MASTER", "");
-            System.out.println("grupo = " + grupoPesquisa);
-            List<Customer> allCustomers = customerRepository.findByBusinessAndCreatedBy(grupoPesquisa, user);
+//            List<Customer> allCustomers = customerRepository.findByBusinessAndCreatedBy(grupoPesquisa, user);
+            List<Customer> allCustomers = customerRepository.findByBusiness(grupoPesquisa);
             System.out.println("customers " + allCustomers);
             for (Customer customer : allCustomers){
                 HashMap<String, Object> response = new HashMap<>();
@@ -234,7 +233,6 @@ public class ProposalController {
                     listResponse.add(response3);
                 }
             }
-            System.out.println("lista " + listResponse);
             return new ResponseEntity<>(listResponse, HttpStatus.OK);
         }
     }
