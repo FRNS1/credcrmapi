@@ -26,6 +26,15 @@ public class FileUploadService {
         return fileName;
     }
 
+    public static String uploadFileContrato(MultipartFile file){
+        AmazonS3 s3Client = AWSConfig.amazonS3();
+        File fileObj = convertMultiPartFiletoFile(file);
+        String fileName = "contratos/" + System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        s3Client.putObject(new PutObjectRequest("docsbora", fileName, fileObj));
+        fileObj.delete();
+        return fileName;
+    }
+
     private static File convertMultiPartFiletoFile(MultipartFile file){
         File convertedFile = new File(file.getOriginalFilename());
         try(FileOutputStream fos = new FileOutputStream(convertedFile)){
